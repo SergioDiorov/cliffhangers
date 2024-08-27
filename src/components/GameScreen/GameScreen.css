@@ -1,0 +1,16 @@
+@keyframes fall {
+  from {
+    bottom: 319px;
+  }
+  to {
+    bottom: 147px;
+  }
+}
+
+.yodely-guy {
+  animation: none;
+}
+
+.yodely-guy.fall {
+  animation: fall 1.5s ease-out;
+}

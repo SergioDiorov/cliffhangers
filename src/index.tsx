@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+import App from './App';
+import { ProductsProvider } from './context/ProductContext';
+import { GameProvider } from './context/GameContext';
+
 import './index.css';
 
 const root = ReactDOM.createRoot(
@@ -9,7 +13,11 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <GameProvider>
+      <ProductsProvider>
+        <App />
+      </ProductsProvider>
+    </GameProvider>
   </React.StrictMode>,
 );
 
