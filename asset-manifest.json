@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/cliffhangers/static/css/main.1ca2a314.css",
+    "main.js": "/cliffhangers/static/js/main.608c6348.js",
+    "static/js/453.2832e561.chunk.js": "/cliffhangers/static/js/453.2832e561.chunk.js",
+    "static/media/ThePriceIsRightYodelling.mp3": "/cliffhangers/static/media/ThePriceIsRightYodelling.c0a97a49921f819613ce.mp3",
+    "static/media/ProductItem.svg": "/cliffhangers/static/media/ProductItem.8f63c486c7bae91531226b3d8fd16d85.svg",
+    "static/media/GameBorder.svg": "/cliffhangers/static/media/GameBorder.2128c8b76bf74909834f4b2cabbbe75e.svg",
+    "static/media/ScreamCrash.mp3": "/cliffhangers/static/media/ScreamCrash.d02fd806870eba3eb863.mp3",
+    "static/media/GameBackground.svg": "/cliffhangers/static/media/GameBackground.e2bbaa10b8c65a4459ad6d79d591e194.svg",
+    "static/media/BuzzerIncorrect.mp3": "/cliffhangers/static/media/BuzzerIncorrect.dc78c7559d75fa069e6a.mp3",
+    "static/media/Correct3Dings.mp3": "/cliffhangers/static/media/Correct3Dings.8c9944e48ec0e8714c90.mp3",
+    "static/media/SingleDing.mp3": "/cliffhangers/static/media/SingleDing.5a5eba2b7647ae0a3ac7.mp3",
+    "static/media/WinningDingX10.mp3": "/cliffhangers/static/media/WinningDingX10.746cb2abffc2255e32cb.mp3",
+    "static/media/YodelyGuy.svg": "/cliffhangers/static/media/YodelyGuy.01b6f81b7bc8c563ac8e439c5161c637.svg",
+    "static/media/YellowRuler.svg": "/cliffhangers/static/media/YellowRuler.b2dd4d85ff3e44bec79cb528b8312a78.svg",
+    "static/media/Settings.svg": "/cliffhangers/static/media/Settings.366ead831e21885ca315fc56f727c206.svg",
+    "static/media/AcceptImages.svg": "/cliffhangers/static/media/AcceptImages.e6d866106173255294d66a819a25f47d.svg",
+    "static/media/CrossIcon.svg": "/cliffhangers/static/media/CrossIcon.db58f52a0b5d3530cd02db40ab7aeda1.svg",
+    "index.html": "/cliffhangers/index.html",
+    "main.1ca2a314.css.map": "/cliffhangers/static/css/main.1ca2a314.css.map",
+    "main.608c6348.js.map": "/cliffhangers/static/js/main.608c6348.js.map",
+    "453.2832e561.chunk.js.map": "/cliffhangers/static/js/453.2832e561.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1ca2a314.css",
+    "static/js/main.608c6348.js"
+  ]
+}
