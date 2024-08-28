@@ -63,7 +63,12 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const resetProducts = () => {
-    setProducts(initialProductsValues);
+    setProducts((prev) => ({
+      ...prev,
+      product1: { ...prev.product1, nameOpened: false, priceOpened: false },
+      product2: { ...prev.product2, nameOpened: false, priceOpened: false },
+      product3: { ...prev.product3, nameOpened: false, priceOpened: false },
+    }));
   };
 
   return (

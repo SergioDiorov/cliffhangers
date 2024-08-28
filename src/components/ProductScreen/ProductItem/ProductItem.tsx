@@ -24,11 +24,13 @@ const ProductItem: FC<IProductItemProps> = ({ productKey, product }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleShowName = () => {
-    setProduct(productKey, { ...product, nameOpened: true });
+    !!product.productName.length &&
+      setProduct(productKey, { ...product, nameOpened: true });
   };
 
   const handleShowPrice = () => {
-    setProduct(productKey, { ...product, priceOpened: true });
+    !!product.productPrice.length &&
+      setProduct(productKey, { ...product, priceOpened: true });
   };
 
   useEffect(() => {
@@ -68,7 +70,7 @@ const ProductItem: FC<IProductItemProps> = ({ productKey, product }) => {
           <img
             src={productImage}
             alt='Product image'
-            className={`max-w-[315px] w-full h-[200px] lg:h-[200px] bg-[#e3e3e3] rounded-[5px] object-cover transition-opacity duration-500 ${
+            className={`max-w-[315px] w-full h-[200px] lg:h-[200px] rounded-[5px] transition-opacity duration-500 object-contain ${
               productImage ? 'opacity-100 animate-fadeIn' : 'opacity-0'
             }`}
           />
@@ -78,11 +80,11 @@ const ProductItem: FC<IProductItemProps> = ({ productKey, product }) => {
         <div className='absolute top-[55px] left-0 right-0 m-auto z-40'>
           <div
             style={{ boxShadow: '0 4px 6px 0 rgba(0, 0, 0, 0.5)' }}
-            className='bg-[#56639d] hover:brightness-110 active:brightness-[1.18] transition w-full md:h-[46px] h-[36px] mb-2 flex items-center justify-center cursor-pointer'
+            className='bg-[#56639d] hover:brightness-110 active:brightness-[1.18] transition w-full md:h-[46px] h-[36px] mb-2 flex items-center justify-center cursor-pointer rounded-[5px]'
             onClick={handleShowName}
           >
             <p
-              className={`md:text-[32px] text-[26px] font-bold uppercase text-white text-ellipsis overflow-hidden whitespace-nowrap transition-opacity duration-500 ${
+              className={`md:text-[28px] text-[26px] font-bold uppercase text-white transition-opacity duration-500 ${
                 nameOpened ? 'opacity-100 animate-fadeIn' : 'opacity-0'
               }`}
             >
@@ -91,7 +93,7 @@ const ProductItem: FC<IProductItemProps> = ({ productKey, product }) => {
           </div>
           <div
             style={{ boxShadow: '0 4px 6px 0 rgba(0, 0, 0, 0.5)' }}
-            className='bg-[#e3e3e3] hover:brightness-110 active:brightness-[1.18] transition w-[142px] md:h-[46px] h-[36px] m-auto flex items-center justify-center'
+            className='bg-[#e3e3e3] hover:brightness-110 active:brightness-[1.18] transition w-[142px] md:h-[46px] h-[36px] m-auto flex items-center justify-center rounded-[5px]'
             onClick={() => productName && handleShowPrice()}
           >
             <p

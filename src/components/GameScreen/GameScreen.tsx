@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import GameBorder from '../../assets/GameBorder.svg';
+import OuterRocksSVG from '../../assets/OuterRocks.svg';
+import OuterRocks from '../../assets/OuterRocks.png';
+import Header from '../../assets/Header.png';
 import GameBackground from '../../assets/GameBackground.svg';
 import YellowRuler from '../../assets/YellowRuler.svg';
 import YodelyGuy from '../../assets/YodelyGuy.svg';
@@ -34,11 +36,20 @@ const GameScreen = () => {
 
   const [falling, setFalling] = useState<boolean>(false);
   const [isYodeling, setIsYodeling] = useState<boolean>(false);
+  const [outerRocksSize, setOuterRocksSize] = useState<null | {
+    width: number;
+    height: number;
+  }>(null);
+  const [headerHeight, setHeaderHeight] = useState<null | number>(null);
 
   const yodelAudioRef = useRef<any>(null);
   const climberStopsMovingAudioRef = useRef<any>(null);
   const winningAudioRef = useRef<any>(null);
   const fallAudioRef = useRef<any>(null);
+  const outerRocksRef = useRef<any>(null);
+  const headerRef = useRef<any>(null);
+
+  console.log(outerRocksSize, headerHeight, 'outerRocksSize, headerHeight');
 
   const navigate = useNavigate();
 
@@ -165,6 +176,21 @@ const GameScreen = () => {
     }
   }, [isYodeling]);
 
+  useEffect(() => {
+    if (outerRocksRef) {
+      setOuterRocksSize({
+        width: outerRocksRef.current.width,
+        height: outerRocksRef.current.height,
+      });
+    }
+  }, [outerRocksRef.current]);
+
+  useEffect(() => {
+    if (headerRef) {
+      setHeaderHeight(headerRef.current.height);
+    }
+  }, [headerRef.current]);
+
   return (
     <div className='relative m-auto w-screen h-screen max-w-[700px] min-[860px]:scale-[1.2] min-[860px]:bottom-[10vh] min-[990px]:scale-[1.4] min-[990px]:bottom-[20vh] min-[1135px]:scale-[1.6] min-[1135px]:bottom-[30vh] min-[1600px]:scale-[1.8] min-[1600px]:bottom-[40vh] min-[1800px]:scale-[2] min-[1800px]:bottom-[50vh] min-[2000px]:scale-[2.2] min-[2000px]:bottom-[60vh] min-[2200px]:scale-[2.4] min-[2200px]:bottom-[70vh] transition-opacity duration-500 animate-fadeIn'>
       <audio
@@ -177,9 +203,24 @@ const GameScreen = () => {
       <audio ref={fallAudioRef} src={ScreamCrash} preload='auto' />
 
       <img
-        src={GameBorder}
-        alt='GameBorder'
+        src={OuterRocks}
+        alt='OuterRocks'
         className='w-full absolute bottom-0 left-0 right-0 m-auto z-40'
+        ref={outerRocksRef}
+      />
+      <img
+        src={Header}
+        style={
+          outerRocksSize && headerHeight
+            ? {
+                maxWidth: outerRocksSize.width - 70,
+                bottom: outerRocksSize.height - headerHeight + 7,
+              }
+            : {}
+        }
+        alt='Header'
+        className='w-full h-auto absolute left-0 right-[20px] m-auto z-50 bottom-[365px] max-w-[630px]'
+        ref={headerRef}
       />
       <img
         src={GameBackground}

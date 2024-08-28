@@ -30,33 +30,6 @@ const SettingsModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     string | ArrayBuffer | null
   >(product3.imgSrc || null);
 
-  const handleResetProducts = () => {
-    setProduct1({
-      imgSrc: '',
-      productName: '',
-      productPrice: '',
-      nameOpened: false,
-      priceOpened: false,
-    });
-    setProduct2({
-      imgSrc: '',
-      productName: '',
-      productPrice: '',
-      nameOpened: false,
-      priceOpened: false,
-    });
-    setProduct3({
-      imgSrc: '',
-      productName: '',
-      productPrice: '',
-      nameOpened: false,
-      priceOpened: false,
-    });
-    setImagePreview1(null);
-    setImagePreview2(null);
-    setImagePreview3(null);
-  };
-
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -203,7 +176,7 @@ const SettingsModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                   <img
                     src={imagePreview1 as string}
                     alt='Product 1'
-                    className='w-full h-full object-cover'
+                    className='w-full h-full object-contain'
                   />
                 ) : (
                   <>
@@ -260,7 +233,7 @@ const SettingsModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                   <img
                     src={imagePreview2 as string}
                     alt='Product 2'
-                    className='w-full h-full object-cover'
+                    className='w-full h-full object-contain'
                   />
                 ) : (
                   <>
@@ -317,7 +290,7 @@ const SettingsModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                   <img
                     src={imagePreview3 as string}
                     alt='Product 3'
-                    className='w-full h-full object-cover'
+                    className='w-full h-full object-contain'
                   />
                 ) : (
                   <>
@@ -358,9 +331,7 @@ const SettingsModal: FC<ModalProps> = ({ isOpen, onClose }) => {
         onClose={() => setOpenConfirmationModal(false)}
         onReset={() => {
           resetProducts();
-          handleResetProducts();
           resetGame();
-          // onClose();
         }}
       />
     </div>
