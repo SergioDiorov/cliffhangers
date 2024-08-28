@@ -1,12 +1,13 @@
 {
   "files": {
-    "main.css": "/cliffhangers/static/css/main.1ca2a314.css",
-    "main.js": "/cliffhangers/static/js/main.fee2b389.js",
+    "main.css": "/cliffhangers/static/css/main.c2634137.css",
+    "main.js": "/cliffhangers/static/js/main.3228a25b.js",
     "static/js/453.2832e561.chunk.js": "/cliffhangers/static/js/453.2832e561.chunk.js",
     "static/media/ThePriceIsRightYodelling.mp3": "/cliffhangers/static/media/ThePriceIsRightYodelling.c0a97a49921f819613ce.mp3",
     "static/media/ProductItem.svg": "/cliffhangers/static/media/ProductItem.e8611f0e440e1deeec6d2fd33d5bd0ad.svg",
-    "static/media/GameBorder.svg": "/cliffhangers/static/media/GameBorder.090a1daf478d273642e89c6c5840e8cc.svg",
+    "static/media/OuterRocks.png": "/cliffhangers/static/media/OuterRocks.d08244da264fd1a76cec.png",
     "static/media/ScreamCrash.mp3": "/cliffhangers/static/media/ScreamCrash.d02fd806870eba3eb863.mp3",
+    "static/media/Header.png": "/cliffhangers/static/media/Header.ede502bf2ac3f6e49989.png",
     "static/media/GameBackground.svg": "/cliffhangers/static/media/GameBackground.da3fa9568336c5cc5215313727bc4971.svg",
     "static/media/BuzzerIncorrect.mp3": "/cliffhangers/static/media/BuzzerIncorrect.dc78c7559d75fa069e6a.mp3",
     "static/media/Correct3Dings.mp3": "/cliffhangers/static/media/Correct3Dings.8c9944e48ec0e8714c90.mp3",
@@ -18,12 +19,12 @@
     "static/media/AcceptImages.svg": "/cliffhangers/static/media/AcceptImages.6338bcc3223723b354ffc5d1dc36eb94.svg",
     "static/media/CrossIcon.svg": "/cliffhangers/static/media/CrossIcon.8e81af2e16e8951d0163d53892cfc111.svg",
     "index.html": "/cliffhangers/index.html",
-    "main.1ca2a314.css.map": "/cliffhangers/static/css/main.1ca2a314.css.map",
-    "main.fee2b389.js.map": "/cliffhangers/static/js/main.fee2b389.js.map",
+    "main.c2634137.css.map": "/cliffhangers/static/css/main.c2634137.css.map",
+    "main.3228a25b.js.map": "/cliffhangers/static/js/main.3228a25b.js.map",
     "453.2832e561.chunk.js.map": "/cliffhangers/static/js/453.2832e561.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1ca2a314.css",
-    "static/js/main.fee2b389.js"
+    "static/css/main.c2634137.css",
+    "static/js/main.3228a25b.js"
   ]
 }
