@@ -1,11 +1,12 @@
 {
   "files": {
-    "main.css": "/cliffhangers/static/css/main.c2634137.css",
-    "main.js": "/cliffhangers/static/js/main.3228a25b.js",
+    "main.css": "/cliffhangers/static/css/main.51743843.css",
+    "main.js": "/cliffhangers/static/js/main.29821813.js",
     "static/js/453.2832e561.chunk.js": "/cliffhangers/static/js/453.2832e561.chunk.js",
     "static/media/ThePriceIsRightYodelling.mp3": "/cliffhangers/static/media/ThePriceIsRightYodelling.c0a97a49921f819613ce.mp3",
     "static/media/ProductItem.svg": "/cliffhangers/static/media/ProductItem.e8611f0e440e1deeec6d2fd33d5bd0ad.svg",
-    "static/media/OuterRocks.png": "/cliffhangers/static/media/OuterRocks.d08244da264fd1a76cec.png",
+    "static/media/GameBackgroundWide.svg": "/cliffhangers/static/media/GameBackgroundWide.33f32e295b273fe6f73dd1c8b1054fd8.svg",
+    "static/media/OuterRocksCut.png": "/cliffhangers/static/media/OuterRocksCut.99c4c6271f96c8ac9bb3.png",
     "static/media/ScreamCrash.mp3": "/cliffhangers/static/media/ScreamCrash.d02fd806870eba3eb863.mp3",
     "static/media/Header.png": "/cliffhangers/static/media/Header.ede502bf2ac3f6e49989.png",
     "static/media/GameBackground.svg": "/cliffhangers/static/media/GameBackground.da3fa9568336c5cc5215313727bc4971.svg",
@@ -14,17 +15,17 @@
     "static/media/SingleDing.mp3": "/cliffhangers/static/media/SingleDing.5a5eba2b7647ae0a3ac7.mp3",
     "static/media/WinningDingX10.mp3": "/cliffhangers/static/media/WinningDingX10.746cb2abffc2255e32cb.mp3",
     "static/media/YodelyGuy.svg": "/cliffhangers/static/media/YodelyGuy.49dc2fcfb600ac056470255af9139cd3.svg",
-    "static/media/YellowRuler.svg": "/cliffhangers/static/media/YellowRuler.22f5d7dc2a72356190d59a99a9c4d976.svg",
+    "static/media/YellowRulerRotate.svg": "/cliffhangers/static/media/YellowRulerRotate.61558b6313613cb160884da5c04db1b7.svg",
     "static/media/Settings.svg": "/cliffhangers/static/media/Settings.83836ff3aa439c00cdfc9ced4cd1e090.svg",
     "static/media/AcceptImages.svg": "/cliffhangers/static/media/AcceptImages.6338bcc3223723b354ffc5d1dc36eb94.svg",
-    "static/media/CrossIcon.svg": "/cliffhangers/static/media/CrossIcon.8e81af2e16e8951d0163d53892cfc111.svg",
     "index.html": "/cliffhangers/index.html",
-    "main.c2634137.css.map": "/cliffhangers/static/css/main.c2634137.css.map",
-    "main.3228a25b.js.map": "/cliffhangers/static/js/main.3228a25b.js.map",
+    "static/media/CrossIcon.svg": "/cliffhangers/static/media/CrossIcon.8e81af2e16e8951d0163d53892cfc111.svg",
+    "main.51743843.css.map": "/cliffhangers/static/css/main.51743843.css.map",
+    "main.29821813.js.map": "/cliffhangers/static/js/main.29821813.js.map",
     "453.2832e561.chunk.js.map": "/cliffhangers/static/js/453.2832e561.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c2634137.css",
-    "static/js/main.3228a25b.js"
+    "static/css/main.51743843.css",
+    "static/js/main.29821813.js"
   ]
 }
