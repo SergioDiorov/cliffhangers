@@ -28,8 +28,12 @@ export const points = {
   25: 528,
 };
 
-export const RIGHT_LIMIT = 531;
-export const LEFT_LIMIT = 150;
-export const START_POSITION_X = 162;
-export const START_POSITION_Y = 147;
+// export const RIGHT_LIMIT = 531;
+export const RIGHT_LIMIT = 0;
+// export const LEFT_LIMIT = 150;
+export const LEFT_LIMIT = 0;
+// export const START_POSITION_X = 162;
+// export const START_POSITION_Y = 147;
+export const START_POSITION_X = 0;
+export const START_POSITION_Y = 0;
 export const MAX_MOVES = Object.keys(points).length - 1;
