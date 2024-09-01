@@ -1,12 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import OuterRocksSVG from '../../assets/OuterRocks.svg';
-import OuterRocks from '../../assets/OuterRocks.png';
 import OuterRocksCut from '../../assets/OuterRocksCut.png';
 import Header from '../../assets/Header.png';
 import GameBackground from '../../assets/GameBackground.svg';
-import YellowRuler from '../../assets/YellowRuler.svg';
 import YellowRulerRotate from '../../assets/YellowRulerRotate.svg';
 import YodelyGuy from '../../assets/YodelyGuy.svg';
 import GameBackgroundWide from '../../assets/GameBackgroundWide.svg';
@@ -17,15 +14,6 @@ import ThePriceIsRightYodelling from '../../assets/audio/ThePriceIsRightYodellin
 import WinningDingX10 from '../../assets/audio/WinningDingX10.mp3';
 
 import { useGame } from '../../context/GameContext';
-import {
-  // points,
-  // LEFT_LIMIT,
-  MAX_MOVES,
-  // RIGHT_LIMIT,
-  // START_POSITION_Y,
-} from './constants';
-
-import './GameScreen.css';
 
 const GameScreen = () => {
   const {
@@ -36,6 +24,8 @@ const GameScreen = () => {
     positionY,
     setPositionY,
   } = useGame();
+
+  const MAX_MOVES = 25;
 
   const [falling, setFalling] = useState<boolean>(false);
   const [isYodeling, setIsYodeling] = useState<boolean>(false);
@@ -50,6 +40,9 @@ const GameScreen = () => {
   const [startPositionY, setStartPositionY] = useState<number>(0);
   const [points, setPoints] = useState<{ [key: number]: number }>({});
   const [isRendered, setIsRendered] = useState<boolean>(false);
+  const [isMainBgLoaded, setMainBgLoaded] = useState<boolean>(false);
+  const [isGameContainerLoaded, setGameContainerLoaded] =
+    useState<boolean>(false);
 
   const yodelAudioRef = useRef<any>(null);
   const climberStopsMovingAudioRef = useRef<any>(null);
@@ -248,7 +241,6 @@ const GameScreen = () => {
 
       setLeftLimit(distanceFromLeftLimit);
 
-      // Calculate points
       const numberOfPoints = 25;
       const pointDistance =
         (adjustedDistance - distanceFromLeftLimit) / numberOfPoints;
@@ -257,7 +249,6 @@ const GameScreen = () => {
       for (let i = 0; i <= numberOfPoints; i++) {
         pointsObject[i] = distanceFromLeftLimit + i * pointDistance;
       }
-      console.log(pointsObject);
 
       setPoints({ ...pointsObject, 25: pointsObject[25] - 5 });
     }
@@ -267,6 +258,16 @@ const GameScreen = () => {
     YodelyGuyRef.current,
     isRendered,
   ]);
+
+  const fallAnimation = falling
+    ? {
+        animation: `fall ${
+          Math.abs(positionY - startPositionY) / 100
+        }s ease-out`,
+        transition: 'bottom 1.5s ease-out',
+        bottom: `${startPositionY}px`,
+      }
+    : {};
 
   return (
     <div className='relative m-auto w-screen h-screen transition-opacity duration-500 animate-fadeIn'>
@@ -283,6 +284,7 @@ const GameScreen = () => {
         src={OuterRocksCut}
         alt='OuterRocks'
         className='w-full absolute bottom-0 left-0 right-0 m-auto z-40 max-w-screen max-h-[101vh]'
+        onLoad={() => setMainBgLoaded(true)}
         ref={outerRocksRef}
       />
       <img
@@ -294,12 +296,20 @@ const GameScreen = () => {
                   outerRocksSize.width > 1230
                     ? 1230
                     : outerRocksSize.width - 70,
-                bottom: outerRocksSize.height - headerHeight + 7,
+                bottom:
+                  outerRocksSize.height <= 0 ||
+                  outerRocksSize.height === undefined
+                    ? 'auto'
+                    : outerRocksSize.height - headerHeight + 7,
+                opacity:
+                  outerRocksSize.height === undefined || !isMainBgLoaded
+                    ? '0'
+                    : '1',
               }
             : {}
         }
         alt='Header'
-        className='w-full h-auto absolute left-0 right-[20px] m-auto z-50 bottom-[365px] max-w-[1400px]'
+        className='w-full h-auto absolute left-0 right-[20px] m-auto z-50 bottom-[365px] max-w-[1400px] animate-fadeIn'
         ref={headerRef}
       />
       <img
@@ -310,7 +320,8 @@ const GameScreen = () => {
         }
         alt='GameBackground'
         ref={GameBackgroundRef}
-        className='w-[85%] absolute bottom-0 left-0 right-0 m-auto z-20'
+        className='w-[85%] min-[1600px]:w-[90%] absolute bottom-0 left-0 right-0 m-auto z-20'
+        onLoad={() => setIsRendered(true)}
       />
       <div
         className='absolute bottom-0 left-0 right-0 m-auto w-full h-full'
@@ -322,16 +333,15 @@ const GameScreen = () => {
             ? GameBackgroundRef.current.offsetHeight
             : 'auto',
         }}
+        onLoad={() => setGameContainerLoaded(true)}
       >
-        {/* <img
-          src={YellowRuler}
-          alt='Ruler'
-          className='w-[72%] h-full absolute bottom-[16%] left-[16%] m-auto z-30 object-cover -rotate-[25deg]'
-        /> */}
         <img
           src={YellowRulerRotate}
           ref={RulerRef}
           alt='Ruler'
+          style={{
+            opacity: isGameContainerLoaded && isMainBgLoaded ? '1' : '0',
+          }}
           className={`h-full absolute ${
             outerRocksSize && outerRocksSize.width > 1230
               ? ' w-[45%] bottom-[19.2%] left-[28%]'
@@ -351,20 +361,22 @@ const GameScreen = () => {
           style={
             isGameStarted && positionX !== 0 && positionY !== 0
               ? {
+                  opacity: isGameContainerLoaded && isMainBgLoaded ? '1' : '0',
                   left: `${positionX}px`,
                   bottom: `${positionY}px`,
+                  ...fallAnimation,
                 }
               : {}
           }
         />
       </div>
 
-      <div className='absolute bottom-[10px] left-[57px] w-[36px] h-[22px] bg-[#e3e3e3] text-[#333] text-[14px] font-bold rounded-[5px] z-40 flex items-center justify-center'>
+      <div className='absolute bottom-[10px] min-[800px]:bottom-[16px] left-[57px] w-[36px] min-[800px]:w-[50px] min-[1200px]:w-[70px] h-[22px] min-[800px]:h-[35px] min-[1200px]:h-[40px] text-[14px] min-[800px]:text-[24px] min-[1200px]:text-[32px] bg-[#e3e3e3] text-[#333] font-bold rounded-[5px] z-40 flex items-center justify-center'>
         {remainingMoves}
       </div>
-      <div className='absolute bottom-[10px] right-[57px] z-40 flex items-center justify-center'>
+      <div className='absolute bottom-[10px] min-[800px]:bottom-[16px] right-[57px] z-40 flex items-center justify-center'>
         <button
-          className='w-fit h-[22px] px-1 bg-[#56639d] hover:bg-[#56639d]/70 active:bg-[#56639d]/50 text-[#fff] text-[14px] font-bold rounded-[5px] uppercase transition'
+          className='w-fit h-[22px] min-[800px]:h-[35px] min-[1200px]:h-[43px] text-[14px] min-[800px]:text-[24px] min-[1200px]:text-[28px] px-1 min-[800px]:px-[8px] min-[1200px]:px-[12px] bg-[#56639d] hover:bg-[#56639d]/70 active:bg-[#56639d]/50 text-[#fff] font-bold rounded-[5px] uppercase transition'
           onClick={() => navigate('/products')}
         >
           products
