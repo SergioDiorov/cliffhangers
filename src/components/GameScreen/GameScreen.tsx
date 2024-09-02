@@ -16,6 +16,16 @@ import WinningDingX10 from '../../assets/audio/WinningDingX10.mp3';
 import { useGame } from '../../context/GameContext';
 
 const GameScreen = () => {
+  const yodelAudioRef = useRef<any>(null);
+  const climberStopsMovingAudioRef = useRef<any>(null);
+  const winningAudioRef = useRef<any>(null);
+  const fallAudioRef = useRef<any>(null);
+  const outerRocksRef = useRef<any>(null);
+  const headerRef = useRef<any>(null);
+  const GameBackgroundRef = useRef<any>(null);
+  const YodelyGuyRef = useRef<any>(null);
+  const RulerRef = useRef<any>(null);
+
   const {
     remainingMoves,
     setRemainingMoves,
@@ -43,16 +53,6 @@ const GameScreen = () => {
   const [isMainBgLoaded, setMainBgLoaded] = useState<boolean>(false);
   const [isGameContainerLoaded, setGameContainerLoaded] =
     useState<boolean>(false);
-
-  const yodelAudioRef = useRef<any>(null);
-  const climberStopsMovingAudioRef = useRef<any>(null);
-  const winningAudioRef = useRef<any>(null);
-  const fallAudioRef = useRef<any>(null);
-  const outerRocksRef = useRef<any>(null);
-  const headerRef = useRef<any>(null);
-  const GameBackgroundRef = useRef<any>(null);
-  const YodelyGuyRef = useRef<any>(null);
-  const RulerRef = useRef<any>(null);
 
   const navigate = useNavigate();
 
@@ -147,6 +147,7 @@ const GameScreen = () => {
     const handleKeyUp = (event: KeyboardEvent) => {
       if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
         setIsYodeling(false);
+        yodelAudioRef.current.pause();
         positionX < rightLimit && handlePlayClimberStopsAudioRef();
       }
     };
@@ -158,7 +159,7 @@ const GameScreen = () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
-  }, [positionX, positionY, isRendered, isMainBgLoaded, isGameContainerLoaded]);
+  }, [positionX, positionY, isRendered]);
 
   useEffect(() => {
     const centerPosition = YodelyGuyRef.current
@@ -172,10 +173,16 @@ const GameScreen = () => {
 
   useEffect(() => {
     if (falling) {
+      const play = setTimeout(() => {
+        handlePlayFallAudioRef();
+      }, 0);
       const timer = setTimeout(() => {
         setFalling(false);
       }, 1500);
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(play);
+      };
     }
   }, [falling]);
 
@@ -199,13 +206,13 @@ const GameScreen = () => {
         height: outerRocksRef.current.height,
       });
     }
-  }, [outerRocksRef.current, isMainBgLoaded, isGameContainerLoaded]);
+  }, [outerRocksRef.current]);
 
   useEffect(() => {
     if (headerRef) {
       setHeaderHeight(headerRef.current.height);
     }
-  }, [headerRef.current, isRendered, isMainBgLoaded, isGameContainerLoaded]);
+  }, [headerRef.current, isRendered]);
 
   useEffect(() => {
     if (YodelyGuyRef.current && GameBackgroundRef.current) {
@@ -252,23 +259,40 @@ const GameScreen = () => {
 
       const koeficient = !outerRocksSize
         ? 1
-        : outerRocksSize.width > 0 && outerRocksSize.width < 800
+        : outerRocksSize.width > 0 && outerRocksSize.width <= 700
+        ? 0.85
+        : outerRocksSize.width > 700 && outerRocksSize.width <= 800
         ? 0.99
-        : outerRocksSize.width > 800 && outerRocksSize.width < 1080
+        : outerRocksSize.width > 800 && outerRocksSize.width <= 1080
         ? 1
-        : outerRocksSize.width > 1080 && outerRocksSize.width < 1600
+        : outerRocksSize.width > 1080 && outerRocksSize.width <= 1500
         ? 1.01
-        : outerRocksSize.width > 1600 && outerRocksSize.width < 1900
+        : outerRocksSize.width > 1500 && outerRocksSize.width <= 1600
+        ? 1.015
+        : outerRocksSize.width > 1600 && outerRocksSize.width <= 1820
+        ? 1.016
+        : outerRocksSize.width > 1820 && outerRocksSize.width <= 1900
         ? 1.02
-        : outerRocksSize.width > 1900 && outerRocksSize.width < 2400
+        : outerRocksSize.width > 1900 && outerRocksSize.width <= 2400
         ? 1.03
-        : outerRocksSize.width > 2400 && outerRocksSize.width < 3000
-        ? 1.04
-        : 1.042;
+        : outerRocksSize.width > 2400 && outerRocksSize.width <= 2800
+        ? 1.035
+        : outerRocksSize.width > 2800 && outerRocksSize.width <= 3000
+        ? 1.038
+        : outerRocksSize.width > 3000 && outerRocksSize.width <= 3200
+        ? 1.038
+        : outerRocksSize.width > 3200 && outerRocksSize.width <= 4000
+        ? 1.045
+        : 1.047;
+
+      const moveForBigScreen = !outerRocksSize ? 0 : 3;
 
       const numberOfPoints = 25;
       const startPoint =
-        yodelyGuyRect.left + yodelyGuyRect.width / 2 - gameBackgroundRect.left;
+        yodelyGuyRect.left +
+        yodelyGuyRect.width / 2 -
+        gameBackgroundRect.left -
+        moveForBigScreen;
       const pointDistance =
         ((adjustedDistance - startPoint) / numberOfPoints) * koeficient;
       const pointsObject: { [key: number]: number } = {};
@@ -277,7 +301,7 @@ const GameScreen = () => {
         pointsObject[i] = startPoint + i * pointDistance + i;
       }
 
-      setPoints({ ...pointsObject, 25: pointsObject[25] - 2 });
+      setPoints({ ...pointsObject, 25: pointsObject[25] - 5 });
     }
   }, [
     RulerRef.current,
