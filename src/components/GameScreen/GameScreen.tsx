@@ -161,11 +161,14 @@ const GameScreen = () => {
   }, [positionX, positionY, isRendered, isMainBgLoaded, isGameContainerLoaded]);
 
   useEffect(() => {
-    const closestKey = getClosestPointKey(positionX);
+    const centerPosition = YodelyGuyRef.current
+      ? YodelyGuyRef.current.width / 2
+      : 0;
+    const closestKey = getClosestPointKey(positionX + centerPosition);
     if (closestKey !== null) {
       setRemainingMoves(MAX_MOVES - +closestKey);
     }
-  }, [positionX]);
+  }, [positionX, YodelyGuyRef]);
 
   useEffect(() => {
     if (falling) {
@@ -247,16 +250,34 @@ const GameScreen = () => {
 
       setLeftLimit(distanceFromLeftLimit);
 
+      const koeficient = !outerRocksSize
+        ? 1
+        : outerRocksSize.width > 0 && outerRocksSize.width < 800
+        ? 0.99
+        : outerRocksSize.width > 800 && outerRocksSize.width < 1080
+        ? 1
+        : outerRocksSize.width > 1080 && outerRocksSize.width < 1600
+        ? 1.01
+        : outerRocksSize.width > 1600 && outerRocksSize.width < 1900
+        ? 1.02
+        : outerRocksSize.width > 1900 && outerRocksSize.width < 2400
+        ? 1.03
+        : outerRocksSize.width > 2400 && outerRocksSize.width < 3000
+        ? 1.04
+        : 1.042;
+
       const numberOfPoints = 25;
+      const startPoint =
+        yodelyGuyRect.left + yodelyGuyRect.width / 2 - gameBackgroundRect.left;
       const pointDistance =
-        (adjustedDistance - distanceFromLeftLimit) / numberOfPoints;
+        ((adjustedDistance - startPoint) / numberOfPoints) * koeficient;
       const pointsObject: { [key: number]: number } = {};
 
       for (let i = 0; i <= numberOfPoints; i++) {
-        pointsObject[i] = distanceFromLeftLimit + i * pointDistance;
+        pointsObject[i] = startPoint + i * pointDistance + i;
       }
 
-      setPoints({ ...pointsObject, 25: pointsObject[25] - 5 });
+      setPoints({ ...pointsObject, 25: pointsObject[25] - 2 });
     }
   }, [
     RulerRef.current,
@@ -265,6 +286,7 @@ const GameScreen = () => {
     isRendered,
     isMainBgLoaded,
     isGameContainerLoaded,
+    outerRocksSize,
   ]);
 
   const fallAnimation = falling
