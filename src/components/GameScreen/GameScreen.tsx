@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import OuterRocksCut from '../../assets/OuterRocksCut.png';
 import Header from '../../assets/Header.png';
 import GameBackground from '../../assets/GameBackground.svg';
+import GameBackgroundWide from '../../assets/GameBackgroundWide.svg';
 import YellowRulerRotate from '../../assets/YellowRulerRotate.svg';
 import YodelyGuy from '../../assets/YodelyGuy.svg';
-import GameBackgroundWide from '../../assets/GameBackgroundWide.svg';
 
 import ScreamCrash from '../../assets/audio/ScreamCrash.mp3';
 import SingleDing from '../../assets/audio/SingleDing.mp3';
@@ -158,7 +158,7 @@ const GameScreen = () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
-  }, [positionX, positionY, isRendered]);
+  }, [positionX, positionY, isRendered, isMainBgLoaded, isGameContainerLoaded]);
 
   useEffect(() => {
     const closestKey = getClosestPointKey(positionX);
@@ -196,13 +196,13 @@ const GameScreen = () => {
         height: outerRocksRef.current.height,
       });
     }
-  }, [outerRocksRef.current]);
+  }, [outerRocksRef.current, isMainBgLoaded, isGameContainerLoaded]);
 
   useEffect(() => {
     if (headerRef) {
       setHeaderHeight(headerRef.current.height);
     }
-  }, [headerRef.current, isRendered]);
+  }, [headerRef.current, isRendered, isMainBgLoaded, isGameContainerLoaded]);
 
   useEffect(() => {
     if (YodelyGuyRef.current && GameBackgroundRef.current) {
@@ -217,7 +217,13 @@ const GameScreen = () => {
       setPositionY(relativeY);
       setStartPositionY(relativeY);
     }
-  }, [YodelyGuyRef.current, GameBackgroundRef.current, isRendered]);
+  }, [
+    YodelyGuyRef.current,
+    GameBackgroundRef.current,
+    isRendered,
+    isMainBgLoaded,
+    isGameContainerLoaded,
+  ]);
 
   useEffect(() => {
     if (RulerRef.current && GameBackgroundRef.current && YodelyGuyRef.current) {
@@ -257,6 +263,8 @@ const GameScreen = () => {
     GameBackgroundRef.current,
     YodelyGuyRef.current,
     isRendered,
+    isMainBgLoaded,
+    isGameContainerLoaded,
   ]);
 
   const fallAnimation = falling
@@ -294,7 +302,9 @@ const GameScreen = () => {
             ? {
                 maxWidth:
                   outerRocksSize.width > 1230
-                    ? 1230
+                    ? 1100
+                    : outerRocksSize.width > 1700
+                    ? 1350
                     : outerRocksSize.width - 70,
                 bottom:
                   outerRocksSize.height <= 0 ||
@@ -320,11 +330,11 @@ const GameScreen = () => {
         }
         alt='GameBackground'
         ref={GameBackgroundRef}
-        className='w-[85%] min-[1600px]:w-[90%] absolute bottom-0 left-0 right-0 m-auto z-20'
+        className='w-[88%] min-[1115px]:w-[85%] min-[1230px]:w-[100%] min-[1600px]:w-[90%] min-[1900px]:w-[100%] min-[1230px]:-mb-[45px] absolute bottom-0 left-0 right-0 m-auto z-20'
         onLoad={() => setIsRendered(true)}
       />
       <div
-        className='absolute bottom-0 left-0 right-0 m-auto w-full h-full'
+        className='absolute bottom-0 left-0 right-0 m-auto w-full h-full min-[1230px]:-mb-[45px]'
         style={{
           maxWidth: !!GameBackgroundRef?.current?.offsetWidth
             ? GameBackgroundRef.current.offsetWidth
@@ -352,11 +362,11 @@ const GameScreen = () => {
           src={YodelyGuy}
           alt='YodelyGuy'
           ref={YodelyGuyRef}
-          className={`absolute z-30 yodely-guy ${falling ? 'fall' : ''}
+          className={`absolute yodely-guy z-[100] ${falling ? 'fall' : ''}
           ${
             outerRocksSize && outerRocksSize.width > 1230
-              ? ' w-[3%] bottom-[46.2%] left-[28%]'
-              : ' w-[5%] bottom-[43.5%] left-[19.7%]'
+              ? ' w-[4%] bottom-[45.7%] left-[27.5%] min-[1900px]:w-[4.3%] min-[1900px]:left-[27.43%]'
+              : ' w-[5.5%] bottom-[43.3%] left-[19.4%]'
           }`}
           style={
             isGameStarted && positionX !== 0 && positionY !== 0
