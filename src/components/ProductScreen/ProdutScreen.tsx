@@ -78,7 +78,7 @@ const ProdutScreen = () => {
                 'inset 3px -2px 4px 0 rgba(144, 144, 144, 0.25), inset -2px 0 4px 0 rgba(92, 92, 92, 0.25)',
             }}
             className='w-[111px] h-[43px] px-1 bg-[#56639d] hover:bg-[#56639d]/70 active:bg-[#56639d]/50 text-[#fff] text-[28px] font-bold rounded-[5px] uppercase transition'
-            onClick={() => navigate('/')}
+            onClick={() => navigate(-1)}
           >
             Back
           </button>
