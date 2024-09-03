@@ -16,6 +16,8 @@ interface GameContextProps {
   setSavesPositionX: React.Dispatch<React.SetStateAction<number | null>>;
   savedPositionY: number | null;
   setSavesPositionY: React.Dispatch<React.SetStateAction<number | null>>;
+  startPoint: number | null;
+  setStartPoint: React.Dispatch<React.SetStateAction<number | null>>;
   resetGame: () => void;
 }
 
@@ -31,6 +33,8 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
   const [savedPositionX, setSavesPositionX] = useState<number | null>(null);
   const [savedPositionY, setSavesPositionY] = useState<number | null>(null);
 
+  const [startPoint, setStartPoint] = useState<number | null>(null);
+
   const resetGame = () => {
     setRemainingMoves(MAX_MOVES);
     setPositionX(START_POSITION_X);
@@ -38,6 +42,8 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
 
     setSavesPositionX(null);
     setSavesPositionY(null);
+
+    setStartPoint(null);
   };
 
   return (
@@ -53,6 +59,8 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
         setSavesPositionX,
         savedPositionY,
         setSavesPositionY,
+        startPoint,
+        setStartPoint,
         resetGame,
       }}
     >

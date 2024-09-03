@@ -32,6 +32,8 @@ const GameScreen = () => {
     setSavesPositionX,
     savedPositionY,
     setSavesPositionY,
+    startPoint: startPointContext,
+    setStartPoint: setStartPointContext,
   } = useGame();
 
   const MAX_MOVES = 25;
@@ -48,6 +50,7 @@ const GameScreen = () => {
   const [leftLimit, setLeftLimit] = useState<number>(0);
   const [startPositionY, setStartPositionY] = useState<number>(0);
   const [points, setPoints] = useState<{ [key: number]: number }>({});
+
   const [isRendered, setIsRendered] = useState<boolean>(false);
   const [isMainBgLoaded, setMainBgLoaded] = useState<boolean>(false);
   const [isGameContainerLoaded, setGameContainerLoaded] =
@@ -291,11 +294,16 @@ const GameScreen = () => {
       const moveForBigScreen = !outerRocksSize ? 0 : 3;
 
       const numberOfPoints = 25;
-      const startPoint =
-        yodelyGuyRect.left +
-        yodelyGuyRect.width / 2 -
-        gameBackgroundRect.left -
-        moveForBigScreen;
+
+      const startPoint = startPointContext
+        ? startPointContext
+        : yodelyGuyRect.left +
+          yodelyGuyRect.width / 2 -
+          gameBackgroundRect.left -
+          moveForBigScreen;
+
+      !startPointContext && setStartPointContext(startPoint);
+
       const pointDistance =
         ((adjustedDistance - startPoint) / numberOfPoints) * koeficient;
       const pointsObject: { [key: number]: number } = {};
@@ -314,6 +322,7 @@ const GameScreen = () => {
     isMainBgLoaded,
     isGameContainerLoaded,
     outerRocksSize,
+    startPointContext,
   ]);
 
   const updateDimensions = () => {
