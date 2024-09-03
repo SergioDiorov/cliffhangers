@@ -218,6 +218,9 @@ const GameScreen = () => {
 
       const relativeX = yodelyGuyRect.left - gameBackgroundRect.left;
       const relativeY = gameBackgroundRect.bottom - yodelyGuyRect.bottom;
+
+      startPositionX ? setLeftLimit(startPositionX) : setLeftLimit(relativeX);
+
       if (
         (!savedPositionX || savedPositionX <= startPositionX) &&
         (!savedPositionY || savedPositionY <= startPositionY)
@@ -258,11 +261,6 @@ const GameScreen = () => {
       const adjustedDistance = distanceFromLeft - yodelyGuyWidth;
 
       setRightLimit(adjustedDistance);
-
-      const rulerLeft = rulerRect.left;
-      const distanceFromLeftLimit = rulerLeft - gameBackgroundLeft - 10;
-
-      setLeftLimit(distanceFromLeftLimit);
 
       const koeficient = !outerRocksSize
         ? 1
