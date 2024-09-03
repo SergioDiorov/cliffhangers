@@ -240,6 +240,8 @@ const GameScreen = () => {
     isRendered,
     isMainBgLoaded,
     isGameContainerLoaded,
+    savedPositionX,
+    savedPositionY,
   ]);
 
   useEffect(() => {
