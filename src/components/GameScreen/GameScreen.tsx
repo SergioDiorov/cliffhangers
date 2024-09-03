@@ -578,7 +578,11 @@ const GameScreen = () => {
       <div className='absolute bottom-[10px] min-[800px]:bottom-[16px] right-[57px] z-40 flex items-center justify-center'>
         <button
           className='w-fit h-[22px] min-[800px]:h-[35px] min-[1200px]:h-[43px] text-[14px] min-[800px]:text-[24px] min-[1200px]:text-[28px] px-1 min-[800px]:px-[8px] min-[1200px]:px-[12px] bg-[#56639d] hover:bg-[#56639d]/70 active:bg-[#56639d]/50 text-[#fff] font-bold rounded-[5px] uppercase transition'
-          onClick={() => navigate('/products')}
+          onClick={() => {
+            setSavesPositionX(positionX);
+            setSavesPositionY(positionY);
+            navigate('/products');
+          }}
         >
           products
         </button>
