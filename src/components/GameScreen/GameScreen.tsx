@@ -212,13 +212,6 @@ const GameScreen = () => {
   }, [isYodeling]);
 
   useEffect(() => {
-    return () => {
-      setSavesPositionX(positionX);
-      setSavesPositionY(positionY);
-    };
-  }, []);
-
-  useEffect(() => {
     if (yodelyGuyElement && gameBackgroundElement) {
       const yodelyGuyRect = yodelyGuyElement.getBoundingClientRect();
       const gameBackgroundRect = gameBackgroundElement.getBoundingClientRect();
