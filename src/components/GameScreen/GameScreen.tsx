@@ -34,6 +34,10 @@ const GameScreen = () => {
     setSavesPositionY,
     startPoint: startPointContext,
     setStartPoint: setStartPointContext,
+    startPositionY,
+    setStartPositionY,
+    startPositionX,
+    setStartPositionX,
   } = useGame();
 
   const MAX_MOVES = 25;
@@ -48,7 +52,6 @@ const GameScreen = () => {
   const [isGameStarted, setIsGmeStarted] = useState<boolean>(false);
   const [rightLimit, setRightLimit] = useState<number>(0);
   const [leftLimit, setLeftLimit] = useState<number>(0);
-  const [startPositionY, setStartPositionY] = useState<number>(0);
   const [points, setPoints] = useState<{ [key: number]: number }>({});
 
   const [isRendered, setIsRendered] = useState<boolean>(false);
@@ -223,16 +226,17 @@ const GameScreen = () => {
       const relativeX = yodelyGuyRect.left - gameBackgroundRect.left;
       const relativeY = gameBackgroundRect.bottom - yodelyGuyRect.bottom;
       if (
-        (!savedPositionX || savedPositionX <= relativeX) &&
-        (!savedPositionY || savedPositionY <= relativeY)
+        (!savedPositionX || savedPositionX <= startPositionX) &&
+        (!savedPositionY || savedPositionY <= startPositionY)
       ) {
         setPositionX(relativeX);
         setPositionY(relativeY);
+        setStartPositionX(relativeX);
+        setStartPositionY(relativeY);
       } else if (savedPositionX && savedPositionY) {
         setPositionX(savedPositionX);
         setPositionY(savedPositionY);
       }
-      setStartPositionY(relativeY);
     }
   }, [
     yodelyGuyElement,
@@ -242,6 +246,8 @@ const GameScreen = () => {
     isGameContainerLoaded,
     savedPositionX,
     savedPositionY,
+    startPositionX,
+    startPositionY,
   ]);
 
   useEffect(() => {
