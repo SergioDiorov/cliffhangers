@@ -20,11 +20,6 @@ const GameScreen = () => {
   const climberStopsMovingAudioRef = useRef<any>(null);
   const winningAudioRef = useRef<any>(null);
   const fallAudioRef = useRef<any>(null);
-  const outerRocksRef = useRef<any>(null);
-  const headerRef = useRef<any>(null);
-  const GameBackgroundRef = useRef<any>(null);
-  const YodelyGuyRef = useRef<any>(null);
-  const RulerRef = useRef<any>(null);
 
   const {
     remainingMoves,
@@ -33,6 +28,10 @@ const GameScreen = () => {
     setPositionX,
     positionY,
     setPositionY,
+    savedPositionX,
+    setSavesPositionX,
+    savedPositionY,
+    setSavesPositionY,
   } = useGame();
 
   const MAX_MOVES = 25;
@@ -53,6 +52,10 @@ const GameScreen = () => {
   const [isMainBgLoaded, setMainBgLoaded] = useState<boolean>(false);
   const [isGameContainerLoaded, setGameContainerLoaded] =
     useState<boolean>(false);
+
+  const [gameBackgroundElement, setGameBackgroundElement] = useState<any>(null);
+  const [yodelyGuyElement, setYodelyGuyElement] = useState<any>(null);
+  const [rulerElement, setRulerElement] = useState<any>(null);
 
   const navigate = useNavigate();
 
@@ -129,11 +132,6 @@ const GameScreen = () => {
 
         setPositionX((prevPositionX) => {
           const newPositionX = Math.min(prevPositionX + 2, rightLimit);
-          if (newPositionX === rightLimit) {
-            positionY !== startPositionY && setFalling(true);
-            positionY !== startPositionY && handlePlayFallAudioRef();
-            setPositionY(startPositionY);
-          }
           return newPositionX;
         });
         setPositionY((prevPositionY) =>
@@ -162,23 +160,30 @@ const GameScreen = () => {
   }, [positionX, positionY, isRendered]);
 
   useEffect(() => {
-    const centerPosition = YodelyGuyRef.current
-      ? YodelyGuyRef.current.width / 2
-      : 0;
+    if (positionX === rightLimit) {
+      positionY !== startPositionY && setFalling(true);
+      positionY !== startPositionY && !falling && handlePlayFallAudioRef();
+      setPositionY(startPositionY);
+    }
+  }, [positionX, rightLimit, positionY, startPositionY, falling]);
+
+  useEffect(() => {
+    const centerPosition = yodelyGuyElement ? yodelyGuyElement.width / 2 : 0;
     const closestKey = getClosestPointKey(positionX + centerPosition);
     if (closestKey !== null) {
       setRemainingMoves(MAX_MOVES - +closestKey);
     }
-  }, [positionX, YodelyGuyRef]);
+  }, [positionX, yodelyGuyElement]);
 
   useEffect(() => {
     if (falling) {
-      const play = setTimeout(() => {
-        handlePlayFallAudioRef();
-      }, 0);
       const timer = setTimeout(() => {
         setFalling(false);
       }, 1500);
+      const play = setTimeout(() => {
+        handlePlayFallAudioRef();
+      }, 0);
+
       return () => {
         clearTimeout(timer);
         clearTimeout(play);
@@ -190,6 +195,7 @@ const GameScreen = () => {
     const timer = setTimeout(() => {
       setIsRendered(true);
     }, 500);
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -200,47 +206,44 @@ const GameScreen = () => {
   }, [isYodeling]);
 
   useEffect(() => {
-    if (outerRocksRef) {
-      setOuterRocksSize({
-        width: outerRocksRef.current.width,
-        height: outerRocksRef.current.height,
-      });
-    }
-  }, [outerRocksRef.current]);
+    return () => {
+      setSavesPositionX(positionX);
+      setSavesPositionY(positionY);
+    };
+  }, []);
 
   useEffect(() => {
-    if (headerRef) {
-      setHeaderHeight(headerRef.current.height);
-    }
-  }, [headerRef.current, isRendered]);
-
-  useEffect(() => {
-    if (YodelyGuyRef.current && GameBackgroundRef.current) {
-      const yodelyGuyRect = YodelyGuyRef.current.getBoundingClientRect();
-      const gameBackgroundRect =
-        GameBackgroundRef.current.getBoundingClientRect();
+    if (yodelyGuyElement && gameBackgroundElement) {
+      const yodelyGuyRect = yodelyGuyElement.getBoundingClientRect();
+      const gameBackgroundRect = gameBackgroundElement.getBoundingClientRect();
 
       const relativeX = yodelyGuyRect.left - gameBackgroundRect.left;
       const relativeY = gameBackgroundRect.bottom - yodelyGuyRect.bottom;
-
-      setPositionX(relativeX);
-      setPositionY(relativeY);
+      if (
+        (!savedPositionX || savedPositionX <= relativeX) &&
+        (!savedPositionY || savedPositionY <= relativeY)
+      ) {
+        setPositionX(relativeX);
+        setPositionY(relativeY);
+      } else if (savedPositionX && savedPositionY) {
+        setPositionX(savedPositionX);
+        setPositionY(savedPositionY);
+      }
       setStartPositionY(relativeY);
     }
   }, [
-    YodelyGuyRef.current,
-    GameBackgroundRef.current,
+    yodelyGuyElement,
+    gameBackgroundElement,
     isRendered,
     isMainBgLoaded,
     isGameContainerLoaded,
   ]);
 
   useEffect(() => {
-    if (RulerRef.current && GameBackgroundRef.current && YodelyGuyRef.current) {
-      const rulerRect = RulerRef.current.getBoundingClientRect();
-      const gameBackgroundRect =
-        GameBackgroundRef.current.getBoundingClientRect();
-      const yodelyGuyRect = YodelyGuyRef.current.getBoundingClientRect();
+    if (rulerElement && gameBackgroundElement && yodelyGuyElement) {
+      const rulerRect = rulerElement.getBoundingClientRect();
+      const gameBackgroundRect = gameBackgroundElement.getBoundingClientRect();
+      const yodelyGuyRect = yodelyGuyElement.getBoundingClientRect();
 
       const rulerRight = rulerRect.right;
       const gameBackgroundLeft = gameBackgroundRect.left;
@@ -304,14 +307,98 @@ const GameScreen = () => {
       setPoints({ ...pointsObject, 25: pointsObject[25] - 5 });
     }
   }, [
-    RulerRef.current,
-    GameBackgroundRef.current,
-    YodelyGuyRef.current,
+    rulerElement,
+    gameBackgroundElement,
+    yodelyGuyElement,
     isRendered,
     isMainBgLoaded,
     isGameContainerLoaded,
     outerRocksSize,
   ]);
+
+  const updateDimensions = () => {
+    const element = document.getElementById('outer-rocks');
+    if (element) {
+      const { offsetWidth, offsetHeight } = element;
+      setOuterRocksSize({
+        width: offsetWidth,
+        height: offsetHeight,
+      });
+    }
+  };
+
+  const updateDimensionsBackground = () => {
+    const element = document.getElementById('game-background');
+    if (element) {
+      setGameBackgroundElement(element);
+    }
+  };
+
+  const updateDimensionsHeader = () => {
+    const element = document.getElementById('heaeder');
+    if (element) {
+      const { offsetHeight } = element;
+      setHeaderHeight(offsetHeight);
+    }
+  };
+
+  const updateDimensionsYodelyGuy = () => {
+    const element = document.getElementById('yodely-guy');
+    if (element) {
+      setYodelyGuyElement(element);
+    }
+  };
+
+  const updateDimensionsRuler = () => {
+    const element = document.getElementById('ruler');
+    if (element) {
+      setRulerElement(element);
+    }
+  };
+
+  useEffect(() => {
+    updateDimensions();
+    updateDimensionsBackground();
+    updateDimensionsHeader();
+    updateDimensionsYodelyGuy();
+    updateDimensionsRuler();
+
+    window.addEventListener('resize', () => {
+      updateDimensions();
+      updateDimensionsBackground();
+      updateDimensionsHeader();
+      updateDimensionsYodelyGuy();
+      updateDimensionsRuler();
+    });
+
+    const rerender1 = setTimeout(() => {
+      updateDimensions();
+      updateDimensionsBackground();
+      updateDimensionsHeader();
+      updateDimensionsYodelyGuy();
+      updateDimensionsRuler();
+    }, 100);
+
+    const rerender2 = setTimeout(() => {
+      updateDimensions();
+      updateDimensionsBackground();
+      updateDimensionsHeader();
+      updateDimensionsYodelyGuy();
+      updateDimensionsRuler();
+    }, 500);
+
+    return () => {
+      window.removeEventListener('resize', () => {
+        updateDimensions();
+        updateDimensionsBackground();
+        updateDimensionsHeader();
+        updateDimensionsYodelyGuy();
+        updateDimensionsRuler();
+      });
+      clearTimeout(rerender1);
+      clearTimeout(rerender2);
+    };
+  }, []);
 
   const fallAnimation = falling
     ? {
@@ -339,12 +426,12 @@ const GameScreen = () => {
         alt='OuterRocks'
         className='w-full absolute bottom-0 left-0 right-0 m-auto z-40 max-w-screen max-h-[101vh]'
         onLoad={() => setMainBgLoaded(true)}
-        ref={outerRocksRef}
+        id='outer-rocks'
       />
       <img
         src={Header}
         style={
-          outerRocksSize && headerHeight
+          outerRocksSize
             ? {
                 maxWidth:
                   outerRocksSize.width > 1230
@@ -354,7 +441,8 @@ const GameScreen = () => {
                     : outerRocksSize.width - 70,
                 bottom:
                   outerRocksSize.height <= 0 ||
-                  outerRocksSize.height === undefined
+                  outerRocksSize.height === undefined ||
+                  !headerHeight
                     ? 'auto'
                     : outerRocksSize.height - headerHeight + 7,
                 opacity:
@@ -366,7 +454,7 @@ const GameScreen = () => {
         }
         alt='Header'
         className='w-full h-auto absolute left-0 right-[20px] m-auto z-50 bottom-[365px] max-w-[1400px] animate-fadeIn'
-        ref={headerRef}
+        id='heaeder'
       />
       <img
         src={
@@ -375,25 +463,25 @@ const GameScreen = () => {
             : GameBackground
         }
         alt='GameBackground'
-        ref={GameBackgroundRef}
+        id='game-background'
         className='w-[88%] min-[1115px]:w-[85%] min-[1230px]:w-[100%] min-[1600px]:w-[90%] min-[1900px]:w-[100%] min-[1230px]:-mb-[45px] absolute bottom-0 left-0 right-0 m-auto z-20'
         onLoad={() => setIsRendered(true)}
       />
       <div
         className='absolute bottom-0 left-0 right-0 m-auto w-full h-full min-[1230px]:-mb-[45px]'
         style={{
-          maxWidth: !!GameBackgroundRef?.current?.offsetWidth
-            ? GameBackgroundRef.current.offsetWidth
+          maxWidth: !!gameBackgroundElement?.offsetWidth
+            ? gameBackgroundElement.offsetWidth
             : 'auto',
-          maxHeight: !!GameBackgroundRef?.current?.offsetHeight
-            ? GameBackgroundRef.current.offsetHeight
+          maxHeight: !!gameBackgroundElement?.offsetHeight
+            ? gameBackgroundElement.offsetHeight
             : 'auto',
         }}
         onLoad={() => setGameContainerLoaded(true)}
       >
         <img
           src={YellowRulerRotate}
-          ref={RulerRef}
+          id='ruler'
           alt='Ruler'
           style={{
             opacity: isGameContainerLoaded && isMainBgLoaded ? '1' : '0',
@@ -407,7 +495,7 @@ const GameScreen = () => {
         <img
           src={YodelyGuy}
           alt='YodelyGuy'
-          ref={YodelyGuyRef}
+          id='yodely-guy'
           className={`absolute yodely-guy z-[100] ${falling ? 'fall' : ''}
           ${
             outerRocksSize && outerRocksSize.width > 1230
@@ -415,7 +503,9 @@ const GameScreen = () => {
               : ' w-[5.5%] bottom-[43.3%] left-[19.4%]'
           }`}
           style={
-            isGameStarted && positionX !== 0 && positionY !== 0
+            (isGameStarted || (savedPositionX && savedPositionY)) &&
+            positionX !== 0 &&
+            positionY !== 0
               ? {
                   opacity: isGameContainerLoaded && isMainBgLoaded ? '1' : '0',
                   left: `${positionX}px`,
