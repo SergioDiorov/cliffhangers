@@ -427,6 +427,24 @@ const GameScreen = () => {
       }
     : {};
 
+  useEffect(() => {
+    const yodelyGuyElement = document.getElementById('yodely-guy');
+
+    if (
+      yodelyGuyElement &&
+      savedPositionX &&
+      savedPositionY &&
+      savedPositionX > startPositionX &&
+      savedPositionY > startPositionY
+    ) {
+      setPositionX(savedPositionX);
+      setPositionY(savedPositionY);
+      yodelyGuyElement.style.left = `${savedPositionX}px`;
+      yodelyGuyElement.style.bottom = `${savedPositionY}px`;
+      yodelyGuyElement.style.opacity = '1';
+    }
+  }, []);
+
   return (
     <div className='relative m-auto w-screen h-screen transition-opacity duration-500 animate-fadeIn'>
       <audio
