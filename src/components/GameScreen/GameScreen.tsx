@@ -431,6 +431,7 @@ const GameScreen = () => {
     const yodelyGuyElement = document.getElementById('yodely-guy');
 
     if (
+      !isGameStarted &&
       yodelyGuyElement &&
       savedPositionX &&
       savedPositionY &&
@@ -443,7 +444,7 @@ const GameScreen = () => {
       yodelyGuyElement.style.bottom = `${savedPositionY}px`;
       yodelyGuyElement.style.opacity = '1';
     }
-  }, []);
+  }, [savedPositionX, savedPositionY, isGameStarted]);
 
   return (
     <div className='relative m-auto w-screen h-screen transition-opacity duration-500 animate-fadeIn'>
