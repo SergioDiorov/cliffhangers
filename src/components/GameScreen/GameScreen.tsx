@@ -445,7 +445,27 @@ const GameScreen = () => {
       yodelyGuyElement.style.opacity = '1';
     }
   }, [savedPositionX, savedPositionY, isGameStarted]);
+  console.log('---------------------------------------');
 
+  console.log(
+    (isGameStarted && positionX !== 0 && positionY !== 0) ||
+      (!!savedPositionX &&
+        !!savedPositionY &&
+        savedPositionX > 0 &&
+        savedPositionY > 0),
+  );
+  console.log(
+    isGameStarted,
+    positionX,
+    positionY,
+    savedPositionX,
+    savedPositionY,
+    savedPositionX,
+    savedPositionY,
+    'isGameStarted, positionX, positionY, savedPositionX, savedPositionY, savedPositionX, savedPositionY,',
+  );
+
+  console.log('---------------------------------------');
   return (
     <div className='relative m-auto w-screen h-screen transition-opacity duration-500 animate-fadeIn'>
       <audio
