@@ -520,9 +520,8 @@ const GameScreen = () => {
               : ' w-[5.5%] bottom-[43.3%] left-[19.4%]'
           }`}
           style={
-            (isGameStarted || (savedPositionX && savedPositionY)) &&
-            positionX !== 0 &&
-            positionY !== 0
+            (isGameStarted && positionX !== 0 && positionY !== 0) ||
+            (savedPositionX && savedPositionY)
               ? {
                   opacity: isGameContainerLoaded && isMainBgLoaded ? '1' : '0',
                   left: `${positionX}px`,
