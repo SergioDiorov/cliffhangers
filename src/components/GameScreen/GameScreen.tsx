@@ -212,26 +212,29 @@ const GameScreen = () => {
   }, [isYodeling]);
 
   useEffect(() => {
-    if (yodelyGuyElement && gameBackgroundElement) {
-      const yodelyGuyRect = yodelyGuyElement.getBoundingClientRect();
-      const gameBackgroundRect = gameBackgroundElement.getBoundingClientRect();
+    setTimeout(() => {
+      if (yodelyGuyElement && gameBackgroundElement) {
+        const yodelyGuyRect = yodelyGuyElement.getBoundingClientRect();
+        const gameBackgroundRect =
+          gameBackgroundElement.getBoundingClientRect();
 
-      const relativeX = yodelyGuyRect.left - gameBackgroundRect.left;
-      const relativeY = gameBackgroundRect.bottom - yodelyGuyRect.bottom;
+        const relativeX = yodelyGuyRect.left - gameBackgroundRect.left;
+        const relativeY = gameBackgroundRect.bottom - yodelyGuyRect.bottom;
 
-      if (
-        (!savedPositionX || savedPositionX <= startPositionX) &&
-        (!savedPositionY || savedPositionY <= startPositionY)
-      ) {
-        setPositionX(relativeX);
-        setPositionY(relativeY);
-        setStartPositionX(relativeX);
-        setStartPositionY(relativeY);
-      } else if (savedPositionX && savedPositionY) {
-        setPositionX(savedPositionX);
-        setPositionY(savedPositionY);
+        if (
+          (!savedPositionX || savedPositionX <= startPositionX) &&
+          (!savedPositionY || savedPositionY <= startPositionY)
+        ) {
+          setPositionX(relativeX);
+          setPositionY(relativeY);
+          setStartPositionX(relativeX);
+          setStartPositionY(relativeY);
+        } else if (savedPositionX && savedPositionY) {
+          setPositionX(savedPositionX);
+          setPositionY(savedPositionY);
+        }
       }
-    }
+    }, 50);
   }, [
     yodelyGuyElement,
     gameBackgroundElement,
