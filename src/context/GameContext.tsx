@@ -35,6 +35,9 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
     setRemainingMoves(MAX_MOVES);
     setPositionX(START_POSITION_X);
     setPositionY(START_POSITION_Y);
+
+    setSavesPositionX(null);
+    setSavesPositionY(null);
   };
 
   return (
