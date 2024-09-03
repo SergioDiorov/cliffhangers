@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/cliffhangers/static/css/main.c22305e5.css",
-    "main.js": "/cliffhangers/static/js/main.4fa9ace1.js",
+    "main.js": "/cliffhangers/static/js/main.839859a3.js",
     "static/js/453.2832e561.chunk.js": "/cliffhangers/static/js/453.2832e561.chunk.js",
     "static/media/ThePriceIsRightYodelling.mp3": "/cliffhangers/static/media/ThePriceIsRightYodelling.c0a97a49921f819613ce.mp3",
     "static/media/ProductItem.svg": "/cliffhangers/static/media/ProductItem.e8611f0e440e1deeec6d2fd33d5bd0ad.svg",
@@ -21,11 +21,11 @@
     "index.html": "/cliffhangers/index.html",
     "static/media/CrossIcon.svg": "/cliffhangers/static/media/CrossIcon.8e81af2e16e8951d0163d53892cfc111.svg",
     "main.c22305e5.css.map": "/cliffhangers/static/css/main.c22305e5.css.map",
-    "main.4fa9ace1.js.map": "/cliffhangers/static/js/main.4fa9ace1.js.map",
+    "main.839859a3.js.map": "/cliffhangers/static/js/main.839859a3.js.map",
     "453.2832e561.chunk.js.map": "/cliffhangers/static/js/453.2832e561.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c22305e5.css",
-    "static/js/main.4fa9ace1.js"
+    "static/js/main.839859a3.js"
   ]
 }
