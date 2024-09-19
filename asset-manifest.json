@@ -1,15 +1,23 @@
 {
   "files": {
-    "main.css": "/cliffhangers/static/css/main.c22305e5.css",
-    "main.js": "/cliffhangers/static/js/main.acd71d6b.js",
+    "main.css": "/cliffhangers/static/css/main.5d38a358.css",
+    "main.js": "/cliffhangers/static/js/main.68381267.js",
     "static/js/453.2832e561.chunk.js": "/cliffhangers/static/js/453.2832e561.chunk.js",
     "static/media/ThePriceIsRightYodelling.mp3": "/cliffhangers/static/media/ThePriceIsRightYodelling.c0a97a49921f819613ce.mp3",
+    "static/media/OuterRocks2560.png": "/cliffhangers/static/media/OuterRocks2560.93c8f4bfec1b28139d0e.png",
     "static/media/ProductItem.svg": "/cliffhangers/static/media/ProductItem.e8611f0e440e1deeec6d2fd33d5bd0ad.svg",
-    "static/media/GameBackgroundWide.svg": "/cliffhangers/static/media/GameBackgroundWide.33f32e295b273fe6f73dd1c8b1054fd8.svg",
+    "static/media/OuterRocks1920.png": "/cliffhangers/static/media/OuterRocks1920.ab601490b3f0ae7f48a7.png",
+    "static/media/Header2560.png": "/cliffhangers/static/media/Header2560.889a359151ced28e2e94.png",
     "static/media/OuterRocksCut.png": "/cliffhangers/static/media/OuterRocksCut.99c4c6271f96c8ac9bb3.png",
     "static/media/ScreamCrash.mp3": "/cliffhangers/static/media/ScreamCrash.d02fd806870eba3eb863.mp3",
     "static/media/Header.png": "/cliffhangers/static/media/Header.ede502bf2ac3f6e49989.png",
+    "static/media/Header1920.png": "/cliffhangers/static/media/Header1920.c56a8f06d70f897abd11.png",
+    "static/media/OuterRocks1366.png": "/cliffhangers/static/media/OuterRocks1366.afc02d30dbfc8ab4720f.png",
+    "static/media/GameBackground1366.svg": "/cliffhangers/static/media/GameBackground1366.2548ee4d74bea064f93911f68feb0fad.svg",
+    "static/media/GameBackground1920.svg": "/cliffhangers/static/media/GameBackground1920.3ee1f062fddd206dd3ac96fc2f5afdb0.svg",
     "static/media/GameBackground.svg": "/cliffhangers/static/media/GameBackground.da3fa9568336c5cc5215313727bc4971.svg",
+    "static/media/GameBackground2560.svg": "/cliffhangers/static/media/GameBackground2560.d45c18ab208b6e9de1f27fb5afad45c8.svg",
+    "static/media/Header1366.png": "/cliffhangers/static/media/Header1366.2b86e2bfab33878407ba.png",
     "static/media/BuzzerIncorrect.mp3": "/cliffhangers/static/media/BuzzerIncorrect.dc78c7559d75fa069e6a.mp3",
     "static/media/Correct3Dings.mp3": "/cliffhangers/static/media/Correct3Dings.8c9944e48ec0e8714c90.mp3",
     "static/media/SingleDing.mp3": "/cliffhangers/static/media/SingleDing.5a5eba2b7647ae0a3ac7.mp3",
@@ -20,12 +28,12 @@
     "static/media/AcceptImages.svg": "/cliffhangers/static/media/AcceptImages.6338bcc3223723b354ffc5d1dc36eb94.svg",
     "index.html": "/cliffhangers/index.html",
     "static/media/CrossIcon.svg": "/cliffhangers/static/media/CrossIcon.8e81af2e16e8951d0163d53892cfc111.svg",
-    "main.c22305e5.css.map": "/cliffhangers/static/css/main.c22305e5.css.map",
-    "main.acd71d6b.js.map": "/cliffhangers/static/js/main.acd71d6b.js.map",
+    "main.5d38a358.css.map": "/cliffhangers/static/css/main.5d38a358.css.map",
+    "main.68381267.js.map": "/cliffhangers/static/js/main.68381267.js.map",
     "453.2832e561.chunk.js.map": "/cliffhangers/static/js/453.2832e561.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c22305e5.css",
-    "static/js/main.acd71d6b.js"
+    "static/css/main.5d38a358.css",
+    "static/js/main.68381267.js"
   ]
 }
