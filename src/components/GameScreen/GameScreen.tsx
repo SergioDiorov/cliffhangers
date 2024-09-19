@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import OuterRocksCut from '../../assets/OuterRocksCut.png';
 import OuterRocks1366 from '../../assets/OuterRocks1366.png';
+import OuterRocks1280x1024 from '../../assets/OuterRocks1280x1024.png';
 import OuterRocks1920 from '../../assets/OuterRocks1920.png';
 import OuterRocks2560 from '../../assets/OuterRocks2560.png';
 import Header from '../../assets/Header.png';
@@ -46,6 +47,8 @@ const GameScreen = () => {
     setStartPositionY,
     startPositionX,
     setStartPositionX,
+    leftLimit,
+    setLeftLimit,
   } = useGame();
 
   const MAX_MOVES = 25;
@@ -59,7 +62,6 @@ const GameScreen = () => {
   const [headerHeight, setHeaderHeight] = useState<null | number>(null);
   const [isGameStarted, setIsGmeStarted] = useState<boolean>(false);
   const [rightLimit, setRightLimit] = useState<number>(0);
-  const [leftLimit, setLeftLimit] = useState<number>(0);
   const [points, setPoints] = useState<{ [key: number]: number }>({});
 
   const [isRendered, setIsRendered] = useState<boolean>(false);
@@ -138,6 +140,10 @@ const GameScreen = () => {
           Math.max(prevPositionX - 2, -window.innerWidth),
         );
         setPositionY((prevPositionY) => Math.max(prevPositionY - 0.935, 0));
+      }
+
+      if (event.key === 'ArrowLeft' && positionX === leftLimit) {
+        yodelAudioRef.current.pause();
       }
 
       if (event.key === 'ArrowRight') {
@@ -298,7 +304,7 @@ const GameScreen = () => {
       const distanceFromLeftLimit =
         yodelyGuyRect.left - gameBackgroundRect.left;
 
-      setLeftLimit(distanceFromLeftLimit);
+      if (leftLimit === 0 || !leftLimit) setLeftLimit(distanceFromLeftLimit);
 
       const koeficient = !outerRocksSize
         ? 1
@@ -372,6 +378,7 @@ const GameScreen = () => {
     isGameContainerLoaded,
     outerRocksSize,
     startPointContext,
+    leftLimit,
   ]);
 
   const updateDimensions = () => {
@@ -487,6 +494,8 @@ const GameScreen = () => {
             ? OuterRocks1920
             : outerRocksSize && outerRocksSize.width >= 1366
             ? OuterRocks1366
+            : outerRocksSize && outerRocksSize.width >= 1000
+            ? OuterRocks1280x1024
             : OuterRocksCut
         }
         alt='OuterRocks'
