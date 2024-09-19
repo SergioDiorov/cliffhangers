@@ -2,9 +2,17 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import OuterRocksCut from '../../assets/OuterRocksCut.png';
+import OuterRocks1366 from '../../assets/OuterRocks1366.png';
+import OuterRocks1920 from '../../assets/OuterRocks1920.png';
+import OuterRocks2560 from '../../assets/OuterRocks2560.png';
 import Header from '../../assets/Header.png';
+import Header1366 from '../../assets/Header1366.png';
+import Header1920 from '../../assets/Header1920.png';
+import Header2560 from '../../assets/Header2560.png';
 import GameBackground from '../../assets/GameBackground.svg';
-import GameBackgroundWide from '../../assets/GameBackgroundWide.svg';
+import GameBackground1366 from '../../assets/GameBackground1366.svg';
+import GameBackground1920 from '../../assets/GameBackground1920.svg';
+import GameBackground2560 from '../../assets/GameBackground2560.svg';
 import YellowRulerRotate from '../../assets/YellowRulerRotate.svg';
 import YodelyGuy from '../../assets/YodelyGuy.svg';
 
@@ -260,8 +268,32 @@ const GameScreen = () => {
 
       const yodelyGuyWidth = yodelyGuyRect.width / 1.3;
       const adjustedDistance = distanceFromLeft - yodelyGuyWidth;
+      const reightLimit =
+        outerRocksSize && outerRocksSize.width > 2000
+          ? adjustedDistance + 16
+          : outerRocksSize && outerRocksSize.width > 1900
+          ? adjustedDistance + 17
+          : outerRocksSize && outerRocksSize.width > 1800
+          ? adjustedDistance + 15
+          : outerRocksSize && outerRocksSize.width > 1700
+          ? adjustedDistance + 14
+          : outerRocksSize && outerRocksSize.width > 1600
+          ? adjustedDistance + 13
+          : outerRocksSize && outerRocksSize.width > 1500
+          ? adjustedDistance + 12
+          : outerRocksSize && outerRocksSize.width > 1400
+          ? adjustedDistance + 11
+          : outerRocksSize && outerRocksSize.width > 1300
+          ? adjustedDistance + 10.5
+          : outerRocksSize && outerRocksSize.width > 1200
+          ? adjustedDistance + 4
+          : outerRocksSize && outerRocksSize.width > 1100
+          ? adjustedDistance + 4
+          : outerRocksSize && outerRocksSize.width > 1000
+          ? adjustedDistance + 1
+          : adjustedDistance + 3;
 
-      setRightLimit(adjustedDistance);
+      setRightLimit(reightLimit);
 
       const distanceFromLeftLimit =
         yodelyGuyRect.left - gameBackgroundRect.left;
@@ -271,21 +303,25 @@ const GameScreen = () => {
       const koeficient = !outerRocksSize
         ? 1
         : outerRocksSize.width > 0 && outerRocksSize.width <= 700
-        ? 0.85
+        ? 0.98
         : outerRocksSize.width > 700 && outerRocksSize.width <= 800
         ? 0.99
         : outerRocksSize.width > 800 && outerRocksSize.width <= 1080
         ? 1
-        : outerRocksSize.width > 1080 && outerRocksSize.width <= 1500
+        : outerRocksSize.width > 1080 && outerRocksSize.width <= 1320
         ? 1.01
+        : outerRocksSize.width > 1320 && outerRocksSize.width <= 1324
+        ? 1.014
+        : outerRocksSize.width > 1324 && outerRocksSize.width <= 1500
+        ? 1.038
         : outerRocksSize.width > 1500 && outerRocksSize.width <= 1600
-        ? 1.015
+        ? 1.04
         : outerRocksSize.width > 1600 && outerRocksSize.width <= 1820
-        ? 1.016
+        ? 1.042
         : outerRocksSize.width > 1820 && outerRocksSize.width <= 1900
-        ? 1.02
+        ? 1.045
         : outerRocksSize.width > 1900 && outerRocksSize.width <= 2400
-        ? 1.03
+        ? 1.048
         : outerRocksSize.width > 2400 && outerRocksSize.width <= 2800
         ? 1.035
         : outerRocksSize.width > 2800 && outerRocksSize.width <= 3000
@@ -317,7 +353,15 @@ const GameScreen = () => {
         pointsObject[i] = startPoint + i * pointDistance + i;
       }
 
-      setPoints({ ...pointsObject, 25: pointsObject[25] - 5 });
+      setPoints({
+        ...pointsObject,
+        25:
+          outerRocksSize && outerRocksSize.width > 2000
+            ? pointsObject[25] - 1
+            : outerRocksSize && outerRocksSize.width > 1600
+            ? pointsObject[25]
+            : pointsObject[25] - 2,
+      });
     }
   }, [
     rulerElement,
@@ -436,29 +480,45 @@ const GameScreen = () => {
       <audio ref={fallAudioRef} src={ScreamCrash} preload='auto' />
 
       <img
-        src={OuterRocksCut}
+        src={
+          outerRocksSize && outerRocksSize.width >= 2560
+            ? OuterRocks2560
+            : outerRocksSize && outerRocksSize.width >= 1920
+            ? OuterRocks1920
+            : outerRocksSize && outerRocksSize.width >= 1366
+            ? OuterRocks1366
+            : OuterRocksCut
+        }
         alt='OuterRocks'
         className='w-full absolute bottom-0 left-0 right-0 m-auto z-40 max-w-screen max-h-[101vh]'
         onLoad={() => setMainBgLoaded(true)}
         id='outer-rocks'
       />
       <img
-        src={Header}
+        src={
+          outerRocksSize && outerRocksSize.width >= 2100
+            ? Header2560
+            : outerRocksSize && outerRocksSize.width >= 1700
+            ? Header1920
+            : outerRocksSize && outerRocksSize.width >= 1200
+            ? Header1366
+            : Header
+        }
         style={
           outerRocksSize
             ? {
                 maxWidth:
-                  outerRocksSize.width > 1230
-                    ? 1100
-                    : outerRocksSize.width > 1700
-                    ? 1350
-                    : outerRocksSize.width - 70,
+                  outerRocksSize && outerRocksSize.width >= 2100
+                    ? 1896
+                    : outerRocksSize && outerRocksSize.width >= 1700
+                    ? 1487
+                    : 1067,
                 bottom:
                   outerRocksSize.height <= 0 ||
                   outerRocksSize.height === undefined ||
                   !headerHeight
                     ? 'auto'
-                    : outerRocksSize.height - headerHeight + 7,
+                    : outerRocksSize.height - headerHeight,
                 opacity:
                   outerRocksSize.height === undefined || !isMainBgLoaded
                     ? '0'
@@ -472,17 +532,21 @@ const GameScreen = () => {
       />
       <img
         src={
-          outerRocksSize && outerRocksSize.width > 1230
-            ? GameBackgroundWide
+          outerRocksSize && outerRocksSize.width >= 2560
+            ? GameBackground2560
+            : outerRocksSize && outerRocksSize.width >= 1920
+            ? GameBackground1920
+            : outerRocksSize && outerRocksSize.width >= 1366
+            ? GameBackground1366
             : GameBackground
         }
         alt='GameBackground'
         id='game-background'
-        className='w-[88%] min-[1115px]:w-[85%] min-[1230px]:w-[100%] min-[1600px]:w-[90%] min-[1900px]:w-[100%] min-[1230px]:-mb-[45px] absolute bottom-0 left-0 right-0 m-auto z-20'
+        className='w-[88%] min-[1366px]:w-[78%] min-[1920px]:w-[77%] min-[2560px]:w-[80%] absolute bottom-0 left-0 right-0 m-auto z-20 min-[1370px]:-mb-[50px] min-[1600px]:mb-0'
         onLoad={() => setIsRendered(true)}
       />
       <div
-        className='absolute bottom-0 left-0 right-0 m-auto w-full h-full min-[1230px]:-mb-[45px]'
+        className='absolute bottom-0 left-0 right-0 m-auto w-full h-full min-[1370px]:-mb-[50px] min-[1600px]:mb-0'
         style={{
           maxWidth: !!gameBackgroundElement?.offsetWidth
             ? gameBackgroundElement.offsetWidth
@@ -501,8 +565,12 @@ const GameScreen = () => {
             opacity: isGameContainerLoaded && isMainBgLoaded ? '1' : '0',
           }}
           className={`h-full absolute ${
-            outerRocksSize && outerRocksSize.width > 1230
-              ? ' w-[45%] bottom-[19.2%] left-[28%]'
+            outerRocksSize && outerRocksSize.width >= 2560
+              ? ' w-[62%] bottom-[18.3%] left-[20.8%]'
+              : outerRocksSize && outerRocksSize.width >= 1920
+              ? ' w-[62%] bottom-[16%] left-[21%]'
+              : outerRocksSize && outerRocksSize.width >= 1366
+              ? ' w-[63%] bottom-[15.2%] left-[20%]'
               : ' w-[65%] bottom-[18.5%] left-[20%]'
           } m-auto z-30 object-contain`}
         />
@@ -512,8 +580,12 @@ const GameScreen = () => {
           id='yodely-guy'
           className={`absolute yodely-guy z-[100] ${falling ? 'fall' : ''}
           ${
-            outerRocksSize && outerRocksSize.width > 1230
-              ? ' w-[4%] bottom-[45.7%] left-[27.5%] min-[1900px]:w-[4.3%] min-[1900px]:left-[27.43%]'
+            outerRocksSize && outerRocksSize.width >= 2560
+              ? 'w-[5.5%] left-[20.2%] bottom-[43.6%]'
+              : outerRocksSize && outerRocksSize.width >= 1920
+              ? 'w-[7.1%] left-[19.5%] bottom-[40.9%]'
+              : outerRocksSize && outerRocksSize.width >= 1366
+              ? 'w-[7%] left-[18.6%] bottom-[39.4%]'
               : ' w-[5.5%] bottom-[43.3%] left-[19.4%]'
           }`}
           style={
@@ -530,12 +602,12 @@ const GameScreen = () => {
         />
       </div>
 
-      <div className='absolute bottom-[10px] min-[800px]:bottom-[16px] left-[57px] w-[36px] min-[800px]:w-[50px] min-[1200px]:w-[70px] h-[22px] min-[800px]:h-[35px] min-[1200px]:h-[40px] text-[14px] min-[800px]:text-[24px] min-[1200px]:text-[32px] bg-[#e3e3e3] text-[#333] font-bold rounded-[5px] z-40 flex items-center justify-center'>
+      <div className='absolute bottom-[27px] min-[2560px]:bottom-[24px] left-[50px] w-[70px] min-[2560px]:w-[140px] h-[40px] min-[2560px]:h-[80px] text-[32px] min-[2560px]:text-[64px] bg-[#e3e3e3] text-[#333] font-bold rounded-[5px] z-40 flex items-center justify-center'>
         {remainingMoves}
       </div>
-      <div className='absolute bottom-[10px] min-[800px]:bottom-[16px] right-[57px] z-40 flex items-center justify-center'>
+      <div className='absolute bottom-[27px] min-[2560px]:bottom-[24px] right-[50px] z-40 flex items-center justify-center'>
         <button
-          className='w-fit h-[22px] min-[800px]:h-[35px] min-[1200px]:h-[43px] text-[14px] min-[800px]:text-[24px] min-[1200px]:text-[28px] px-1 min-[800px]:px-[8px] min-[1200px]:px-[12px] bg-[#56639d] hover:bg-[#56639d]/70 active:bg-[#56639d]/50 text-[#fff] font-bold rounded-[5px] uppercase transition'
+          className='w-fit h-[43px] min-[2560px]:h-[86px] text-[28px] min-[2560px]:text-[56px] px-1 min-[800px]:px-[8px] min-[1200px]:px-[12px] bg-[#56639d] hover:bg-[#56639d]/70 active:bg-[#56639d]/50 text-[#fff] font-bold rounded-[5px] uppercase transition'
           onClick={() => {
             setSavesPositionX(positionX);
             setSavesPositionY(positionY);
