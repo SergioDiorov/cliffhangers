@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/cliffhangers/static/css/main.5d38a358.css",
-    "main.js": "/cliffhangers/static/js/main.49dd74c5.js",
+    "main.css": "/cliffhangers/static/css/main.948eb55a.css",
+    "main.js": "/cliffhangers/static/js/main.0a7fbfd7.js",
     "static/js/453.2832e561.chunk.js": "/cliffhangers/static/js/453.2832e561.chunk.js",
     "static/media/ThePriceIsRightYodelling.mp3": "/cliffhangers/static/media/ThePriceIsRightYodelling.c0a97a49921f819613ce.mp3",
     "static/media/OuterRocks2560.png": "/cliffhangers/static/media/OuterRocks2560.93c8f4bfec1b28139d0e.png",
@@ -29,12 +29,12 @@
     "static/media/AcceptImages.svg": "/cliffhangers/static/media/AcceptImages.6338bcc3223723b354ffc5d1dc36eb94.svg",
     "index.html": "/cliffhangers/index.html",
     "static/media/CrossIcon.svg": "/cliffhangers/static/media/CrossIcon.8e81af2e16e8951d0163d53892cfc111.svg",
-    "main.5d38a358.css.map": "/cliffhangers/static/css/main.5d38a358.css.map",
-    "main.49dd74c5.js.map": "/cliffhangers/static/js/main.49dd74c5.js.map",
+    "main.948eb55a.css.map": "/cliffhangers/static/css/main.948eb55a.css.map",
+    "main.0a7fbfd7.js.map": "/cliffhangers/static/js/main.0a7fbfd7.js.map",
     "453.2832e561.chunk.js.map": "/cliffhangers/static/js/453.2832e561.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5d38a358.css",
-    "static/js/main.49dd74c5.js"
+    "static/css/main.948eb55a.css",
+    "static/js/main.0a7fbfd7.js"
   ]
 }
