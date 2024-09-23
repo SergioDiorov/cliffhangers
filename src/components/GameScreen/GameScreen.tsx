@@ -72,6 +72,7 @@ const GameScreen = () => {
   const [gameBackgroundElement, setGameBackgroundElement] = useState<any>(null);
   const [yodelyGuyElement, setYodelyGuyElement] = useState<any>(null);
   const [rulerElement, setRulerElement] = useState<any>(null);
+  const [gameMarginBottom, setGameMarginBottom] = useState<number | null>(null);
 
   const navigate = useNavigate();
 
@@ -465,6 +466,26 @@ const GameScreen = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (
+      outerRocksSize &&
+      gameBackgroundElement &&
+      rulerElement &&
+      rulerElement.y < 0
+    ) {
+      setGameMarginBottom(Math.abs(rulerElement.y));
+    }
+
+    if (
+      outerRocksSize &&
+      gameBackgroundElement &&
+      rulerElement &&
+      rulerElement.y > 0
+    ) {
+      setGameMarginBottom(null);
+    }
+  }, [rulerElement, gameBackgroundElement, outerRocksSize]);
+
   const fallAnimation = falling
     ? {
         animation: `fall ${
@@ -499,7 +520,7 @@ const GameScreen = () => {
             : OuterRocksCut
         }
         alt='OuterRocks'
-        className='w-full absolute bottom-0 left-0 right-0 m-auto z-40 max-w-screen max-h-[101vh]'
+        className='w-full absolute bottom-0 left-0 right-0 m-auto z-[42] max-w-screen max-h-[101vh]'
         onLoad={() => setMainBgLoaded(true)}
         id='outer-rocks'
       />
@@ -549,13 +570,18 @@ const GameScreen = () => {
             ? GameBackground1366
             : GameBackground
         }
+        style={{
+          transform: gameMarginBottom
+            ? `translateY(${gameMarginBottom}px)`
+            : `translateY(0)`,
+        }}
         alt='GameBackground'
         id='game-background'
-        className='w-[88%] min-[1366px]:w-[78%] min-[1920px]:w-[77%] min-[2560px]:w-[80%] absolute bottom-0 left-0 right-0 m-auto z-20 min-[1370px]:-mb-[50px] min-[1600px]:mb-0'
+        className='w-[88%] min-[1366px]:w-[78%] min-[1920px]:w-[77%] min-[2560px]:w-[80%] absolute bottom-0 left-0 right-0 m-auto z-0'
         onLoad={() => setIsRendered(true)}
       />
       <div
-        className='absolute bottom-0 left-0 right-0 m-auto w-full h-full min-[1370px]:-mb-[50px] min-[1600px]:mb-0'
+        className='absolute bottom-0 left-0 right-0 m-auto w-full h-full z-50'
         style={{
           maxWidth: !!gameBackgroundElement?.offsetWidth
             ? gameBackgroundElement.offsetWidth
@@ -563,6 +589,9 @@ const GameScreen = () => {
           maxHeight: !!gameBackgroundElement?.offsetHeight
             ? gameBackgroundElement.offsetHeight
             : 'auto',
+          transform: gameMarginBottom
+            ? `translateY(${gameMarginBottom}px)`
+            : `translateY(0)`,
         }}
         onLoad={() => setGameContainerLoaded(true)}
       >
@@ -611,10 +640,10 @@ const GameScreen = () => {
         />
       </div>
 
-      <div className='absolute bottom-[27px] min-[2560px]:bottom-[24px] left-[50px] w-[70px] min-[2560px]:w-[140px] h-[40px] min-[2560px]:h-[80px] text-[32px] min-[2560px]:text-[64px] bg-[#e3e3e3] text-[#333] font-bold rounded-[5px] z-40 flex items-center justify-center'>
+      <div className='absolute bottom-[27px] min-[2560px]:bottom-[24px] left-[50px] w-[70px] min-[2560px]:w-[140px] h-[40px] min-[2560px]:h-[80px] text-[32px] min-[2560px]:text-[64px] bg-[#e3e3e3] text-[#333] font-bold rounded-[5px] flex items-center justify-center z-[9999]'>
         {remainingMoves}
       </div>
-      <div className='absolute bottom-[27px] min-[2560px]:bottom-[24px] right-[50px] z-40 flex items-center justify-center'>
+      <div className='absolute bottom-[27px] min-[2560px]:bottom-[24px] right-[50px] flex items-center justify-center z-[9999]'>
         <button
           className='w-fit h-[43px] min-[2560px]:h-[86px] text-[28px] min-[2560px]:text-[56px] px-1 min-[800px]:px-[8px] min-[1200px]:px-[12px] bg-[#56639d] hover:bg-[#56639d]/70 active:bg-[#56639d]/50 text-[#fff] font-bold rounded-[5px] uppercase transition'
           onClick={() => {
