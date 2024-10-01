@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './styles.css';
 
 import OuterRocksCut from '../../assets/OuterRocksCut.png';
 import OuterRocks1366 from '../../assets/OuterRocks1366.png';
@@ -23,6 +24,7 @@ import ThePriceIsRightYodelling from '../../assets/audio/ThePriceIsRightYodellin
 import WinningDingX10 from '../../assets/audio/WinningDingX10.mp3';
 
 import { useGame } from '../../context/GameContext';
+import { getStepXCoefficient } from './constants';
 
 const GameScreen = () => {
   const yodelAudioRef = useRef<any>(null);
@@ -53,6 +55,7 @@ const GameScreen = () => {
 
   const MAX_MOVES = 25;
 
+  const [isStartPositionSet, setStartPositionSet] = useState<boolean>(false);
   const [falling, setFalling] = useState<boolean>(false);
   const [isYodeling, setIsYodeling] = useState<boolean>(false);
   const [outerRocksSize, setOuterRocksSize] = useState<null | {
@@ -125,6 +128,10 @@ const GameScreen = () => {
   };
 
   useEffect(() => {
+    const { x: xCoefficient, y: yCoefficient } = getStepXCoefficient(
+      window.innerWidth,
+    );
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === ' ') {
         handlePlayWinningAudioRef();
@@ -138,9 +145,11 @@ const GameScreen = () => {
         setIsYodeling(true);
         setIsGmeStarted(true);
         setPositionX((prevPositionX) =>
-          Math.max(prevPositionX - 2, -window.innerWidth),
+          Math.max(prevPositionX - xCoefficient, -window.innerWidth),
         );
-        setPositionY((prevPositionY) => Math.max(prevPositionY - 0.935, 0));
+        setPositionY((prevPositionY) =>
+          Math.max(prevPositionY - yCoefficient, 0),
+        );
       }
 
       if (event.key === 'ArrowLeft' && positionX === leftLimit) {
@@ -152,12 +161,15 @@ const GameScreen = () => {
         setIsGmeStarted(true);
 
         setPositionX((prevPositionX) => {
-          const newPositionX = Math.min(prevPositionX + 2, rightLimit);
+          const newPositionX = Math.min(
+            prevPositionX + xCoefficient,
+            rightLimit,
+          );
           return newPositionX;
         });
         setPositionY((prevPositionY) =>
           positionX < rightLimit
-            ? Math.min(prevPositionY + 0.94, window.innerHeight)
+            ? Math.min(prevPositionY + yCoefficient, window.innerHeight)
             : startPositionY,
         );
       }
@@ -238,12 +250,14 @@ const GameScreen = () => {
 
         if (
           (!savedPositionX || savedPositionX <= startPositionX) &&
-          (!savedPositionY || savedPositionY <= startPositionY)
+          (!savedPositionY || savedPositionY <= startPositionY) &&
+          !isStartPositionSet
         ) {
           setPositionX(relativeX);
           setPositionY(relativeY);
           setStartPositionX(relativeX);
           setStartPositionY(relativeY);
+          setStartPositionSet(true);
         } else if (savedPositionX && savedPositionY) {
           setPositionX(savedPositionX);
           setPositionY(savedPositionY);
@@ -251,6 +265,7 @@ const GameScreen = () => {
       }
     }, 50);
   }, [
+    isStartPositionSet,
     yodelyGuyElement,
     gameBackgroundElement,
     isRendered,
@@ -490,9 +505,10 @@ const GameScreen = () => {
     ? {
         animation: `fall ${
           Math.abs(positionY - startPositionY) / 100
-        }s ease-out`,
+        }s ease-out, rotate 1.5s linear`,
         transition: 'bottom 1.5s ease-out',
         bottom: `${startPositionY}px`,
+        transform: 'rotate(360deg)',
       }
     : {};
 
@@ -581,7 +597,9 @@ const GameScreen = () => {
         onLoad={() => setIsRendered(true)}
       />
       <div
-        className='absolute bottom-0 left-0 right-0 m-auto w-full h-full z-50'
+        className={`absolute bottom-0 left-0 right-0 m-auto w-full h-full z-50 ${
+          !falling && positionY === startPositionY ? '!z-0' : ''
+        }`}
         style={{
           maxWidth: !!gameBackgroundElement?.offsetWidth
             ? gameBackgroundElement.offsetWidth
@@ -592,6 +610,7 @@ const GameScreen = () => {
           transform: gameMarginBottom
             ? `translateY(${gameMarginBottom}px)`
             : `translateY(0)`,
+          zIndex: falling ? 0 : 50,
         }}
         onLoad={() => setGameContainerLoaded(true)}
       >
@@ -616,7 +635,9 @@ const GameScreen = () => {
           src={YodelyGuy}
           alt='YodelyGuy'
           id='yodely-guy'
-          className={`absolute yodely-guy z-[100] ${falling ? 'fall' : ''}
+          className={`absolute yodely-guy z-[100] ${
+            falling ? 'fall rotate' : ''
+          }
           ${
             outerRocksSize && outerRocksSize.width >= 2560
               ? 'w-[5.5%] left-[20.2%] bottom-[43.6%]'
