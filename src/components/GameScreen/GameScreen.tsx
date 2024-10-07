@@ -2,16 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './styles.css';
 
-import OuterRocksCut from '../../assets/OuterRocksCut.png';
 import OuterRocks1366 from '../../assets/OuterRocks1366.png';
-import OuterRocks1280x1024 from '../../assets/OuterRocks1280x1024.png';
 import OuterRocks1920 from '../../assets/OuterRocks1920.png';
 import OuterRocks2560 from '../../assets/OuterRocks2560.png';
-import Header from '../../assets/Header.png';
 import Header1366 from '../../assets/Header1366.png';
 import Header1920 from '../../assets/Header1920.png';
 import Header2560 from '../../assets/Header2560.png';
-import GameBackground from '../../assets/GameBackground.svg';
 import GameBackground1366 from '../../assets/GameBackground1366.svg';
 import GameBackground1920 from '../../assets/GameBackground1920.svg';
 import GameBackground2560 from '../../assets/GameBackground2560.svg';
@@ -292,27 +288,27 @@ const GameScreen = () => {
       const adjustedDistance = distanceFromLeft - yodelyGuyWidth;
       const reightLimit =
         outerRocksSize && outerRocksSize.width > 2000
-          ? adjustedDistance + 16
+          ? adjustedDistance + 9
           : outerRocksSize && outerRocksSize.width > 1900
-          ? adjustedDistance + 17
+          ? adjustedDistance + 8
           : outerRocksSize && outerRocksSize.width > 1800
-          ? adjustedDistance + 15
+          ? adjustedDistance + 7
           : outerRocksSize && outerRocksSize.width > 1700
-          ? adjustedDistance + 14
+          ? adjustedDistance + 6
           : outerRocksSize && outerRocksSize.width > 1600
-          ? adjustedDistance + 13
+          ? adjustedDistance + 5
           : outerRocksSize && outerRocksSize.width > 1500
-          ? adjustedDistance + 12
+          ? adjustedDistance + 5
           : outerRocksSize && outerRocksSize.width > 1400
-          ? adjustedDistance + 11
-          : outerRocksSize && outerRocksSize.width > 1300
-          ? adjustedDistance + 10.5
-          : outerRocksSize && outerRocksSize.width > 1200
           ? adjustedDistance + 4
+          : outerRocksSize && outerRocksSize.width > 1300
+          ? adjustedDistance + 3
+          : outerRocksSize && outerRocksSize.width > 1200
+          ? adjustedDistance + 3
           : outerRocksSize && outerRocksSize.width > 1100
           ? adjustedDistance + 4
           : outerRocksSize && outerRocksSize.width > 1000
-          ? adjustedDistance + 1
+          ? adjustedDistance + 2
           : adjustedDistance + 3;
 
       setRightLimit(reightLimit);
@@ -323,7 +319,7 @@ const GameScreen = () => {
       if (leftLimit === 0 || !leftLimit) setLeftLimit(distanceFromLeftLimit);
 
       const koeficient = !outerRocksSize
-        ? 1
+        ? 0.97
         : outerRocksSize.width > 0 && outerRocksSize.width <= 700
         ? 0.98
         : outerRocksSize.width > 700 && outerRocksSize.width <= 800
@@ -331,28 +327,32 @@ const GameScreen = () => {
         : outerRocksSize.width > 800 && outerRocksSize.width <= 1080
         ? 1
         : outerRocksSize.width > 1080 && outerRocksSize.width <= 1320
-        ? 1.01
+        ? 1.007
         : outerRocksSize.width > 1320 && outerRocksSize.width <= 1324
         ? 1.014
         : outerRocksSize.width > 1324 && outerRocksSize.width <= 1500
-        ? 1.038
+        ? 1.01
         : outerRocksSize.width > 1500 && outerRocksSize.width <= 1600
-        ? 1.04
+        ? 1.012
         : outerRocksSize.width > 1600 && outerRocksSize.width <= 1820
-        ? 1.042
+        ? 1.015
         : outerRocksSize.width > 1820 && outerRocksSize.width <= 1900
-        ? 1.045
-        : outerRocksSize.width > 1900 && outerRocksSize.width <= 2400
-        ? 1.048
-        : outerRocksSize.width > 2400 && outerRocksSize.width <= 2800
-        ? 1.035
+        ? 1.017
+        : outerRocksSize.width > 1900 && outerRocksSize.width <= 2000
+        ? 1.0171
+        : outerRocksSize.width > 2000 && outerRocksSize.width <= 2400
+        ? 1.0175
+        : outerRocksSize.width > 2400 && outerRocksSize.width <= 2560
+        ? 1.018
+        : outerRocksSize.width > 2560 && outerRocksSize.width <= 2800
+        ? 1.024
         : outerRocksSize.width > 2800 && outerRocksSize.width <= 3000
-        ? 1.038
+        ? 1.025
         : outerRocksSize.width > 3000 && outerRocksSize.width <= 3200
-        ? 1.038
+        ? 1.026
         : outerRocksSize.width > 3200 && outerRocksSize.width <= 4000
-        ? 1.045
-        : 1.047;
+        ? 1.028
+        : 1.03;
 
       const moveForBigScreen = !outerRocksSize ? 0 : 3;
 
@@ -378,11 +378,13 @@ const GameScreen = () => {
       setPoints({
         ...pointsObject,
         25:
-          outerRocksSize && outerRocksSize.width > 2000
-            ? pointsObject[25] - 1
+          outerRocksSize && outerRocksSize.width > 2800
+            ? pointsObject[25] - 6
+            : outerRocksSize && outerRocksSize.width > 2000
+            ? pointsObject[25] - 8
             : outerRocksSize && outerRocksSize.width > 1600
-            ? pointsObject[25]
-            : pointsObject[25] - 2,
+            ? pointsObject[25] - 3
+            : pointsObject[25] - 2.5,
       });
     }
   }, [
@@ -529,11 +531,7 @@ const GameScreen = () => {
             ? OuterRocks2560
             : outerRocksSize && outerRocksSize.width >= 1920
             ? OuterRocks1920
-            : outerRocksSize && outerRocksSize.width >= 1366
-            ? OuterRocks1366
-            : outerRocksSize && outerRocksSize.width >= 1000
-            ? OuterRocks1280x1024
-            : OuterRocksCut
+            : OuterRocks1366
         }
         alt='OuterRocks'
         className='w-full absolute bottom-0 left-0 right-0 m-auto z-[42] max-w-screen max-h-[101vh]'
@@ -546,9 +544,7 @@ const GameScreen = () => {
             ? Header2560
             : outerRocksSize && outerRocksSize.width >= 1700
             ? Header1920
-            : outerRocksSize && outerRocksSize.width >= 1200
-            ? Header1366
-            : Header
+            : Header1366
         }
         style={
           outerRocksSize
@@ -582,9 +578,7 @@ const GameScreen = () => {
             ? GameBackground2560
             : outerRocksSize && outerRocksSize.width >= 1920
             ? GameBackground1920
-            : outerRocksSize && outerRocksSize.width >= 1366
-            ? GameBackground1366
-            : GameBackground
+            : GameBackground1366
         }
         style={{
           transform: gameMarginBottom
@@ -593,7 +587,7 @@ const GameScreen = () => {
         }}
         alt='GameBackground'
         id='game-background'
-        className='w-[88%] min-[1366px]:w-[78%] min-[1920px]:w-[77%] min-[2560px]:w-[80%] absolute bottom-0 left-0 right-0 m-auto z-0'
+        className='w-[96%] min-[1920px]:w-[96%] min-[2560px]:w-[93%] absolute bottom-0 left-0 right-0 m-auto z-0'
         onLoad={() => setIsRendered(true)}
       />
       <div
@@ -623,12 +617,10 @@ const GameScreen = () => {
           }}
           className={`h-full absolute ${
             outerRocksSize && outerRocksSize.width >= 2560
-              ? ' w-[62%] bottom-[18.3%] left-[20.8%]'
+              ? ' w-[65%] bottom-[14.1%] left-[17.5%]'
               : outerRocksSize && outerRocksSize.width >= 1920
-              ? ' w-[62%] bottom-[16%] left-[21%]'
-              : outerRocksSize && outerRocksSize.width >= 1366
-              ? ' w-[63%] bottom-[15.2%] left-[20%]'
-              : ' w-[65%] bottom-[18.5%] left-[20%]'
+              ? ' w-[65%] bottom-[14%] left-[17.4%]'
+              : ' w-[65%] bottom-[13.7%] left-[17.3%]'
           } m-auto z-30 object-contain`}
         />
         <img
@@ -640,12 +632,10 @@ const GameScreen = () => {
           }
           ${
             outerRocksSize && outerRocksSize.width >= 2560
-              ? 'w-[5.5%] left-[20.2%] bottom-[43.6%]'
+              ? 'w-[4.8%] left-[17.4%] bottom-[44.8%]'
               : outerRocksSize && outerRocksSize.width >= 1920
-              ? 'w-[7.1%] left-[19.5%] bottom-[40.9%]'
-              : outerRocksSize && outerRocksSize.width >= 1366
-              ? 'w-[7%] left-[18.6%] bottom-[39.4%]'
-              : ' w-[5.5%] bottom-[43.3%] left-[19.4%]'
+              ? 'w-[4.3%] left-[17.5%] bottom-[44.9%]'
+              : 'w-[4.7%] left-[17.3%] bottom-[44.3%]'
           }`}
           style={
             (isGameStarted && positionX !== 0 && positionY !== 0) ||
